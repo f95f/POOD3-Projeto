@@ -1,8 +1,10 @@
 package classes.models;
 
+import java.sql.ResultSet;
+
 import classes.database.DBQuery;
 
-public class Produtos {
+public class Produto {
 
 	private int idProduto;
 	private String fabricante;
@@ -25,14 +27,65 @@ public class Produtos {
 	String fieldsName = "idProduto,fabricante,nome,marca,modelo,idCategoria,descricao,unidadeMedida,largura,altura,profundidade,peso,cor";
 	String fieldKey = "idProduto";
 	
-	private DBQuery dbQuery = new DBQuery( tableName, fieldsName, fieldKey);
+	private DBQuery dbQuery = new DBQuery(tableName, fieldsName, fieldKey);
 	
+	
+	// --- Operações no BD -------------------------
+	
+	public ResultSet listAll() {
+		
+		return this.dbQuery.select("");
+		
+	}
+	
+	public int save() {
+		
+		if(this.getIdProduto() > 0) {
+			return this.dbQuery.update(this.toArray());
+		}
+		else{
+			return this.dbQuery.insert(this.toArray());
+		}
+		
+	}
+	
+	public int delete(){	
+		
+		if(this.getIdCategoria() > 0) {
+			return this.dbQuery.delete(this.toArray());
+		}
+		return 0;
+	}
+	
+	
+	// --- toArray -------------------------
+	
+	private String[] toArray(){
+		
+		return new String[] {
+				
+			this.getIdProduto() + "",
+			this.getFabricante(),
+			this.getNome(),
+			this.getMarca(),
+			this.getModelo(),
+			this.getIdCategoria() + "",
+			this.getDescricao(),
+			this.getUnidadeMedida(),
+			this.getLargura() + "",
+			this.getAltura() + "",
+			this.getProfundidade() + "",
+			this.getPeso() + "",
+			this.getCor()
+				
+		};		
+	}
 	
 	// --- Construtores -------------------------
 	
-	public Produtos() {}
+	public Produto() {}
 
-	public Produtos(int idProduto, String fabricante, String nome, String marca, String modelo, int idCategoria,
+	public Produto(int idProduto, String fabricante, String nome, String marca, String modelo, int idCategoria,
 			String descricao, String unidadeMedida, double largura, double altura, double profundidade, double peso,
 			String cor) {
 		super();

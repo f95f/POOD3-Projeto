@@ -2,7 +2,7 @@ package classes.models;
 
 import classes.database.DBQuery;
 
-public class Usuarios {
+public class Usuario {
 
 	private int idUsuario;
 	private String email;
@@ -31,9 +31,9 @@ public class Usuarios {
 	
 	// --- Construtores -------------------------
 	
-	public Usuarios() {}
+	public Usuario() {}
 	
-	public Usuarios(int idUsuario, String email, String senha, int idNivelUsuario, String nome, String cpf,
+	public Usuario(int idUsuario, String email, String senha, int idNivelUsuario, String nome, String cpf,
 			String endereco, String bairro, String cidade, String uf, String cep, String telefone, String foto,
 			String ativo) {
 		super();
