@@ -51,7 +51,7 @@ public class Produto {
 	
 	public int delete(){	
 		
-		if(this.getIdCategoria() > 0) {
+		if(this.getIdProduto() > 0) {
 			return this.dbQuery.delete(this.toArray());
 		}
 		return 0;
