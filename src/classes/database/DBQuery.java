@@ -82,7 +82,7 @@ public class DBQuery {
 	public ResultSet select(String where) {
 		String sql = "SELECT "+  this.joinElements(this.fieldsName, ", ") + " FROM " + this.tableName;
 		sql += (( where!="") ? " WHERE "+ where : "" );
-		System.out.print(sql);
+		//System.out.print(sql);
 		return this.query(sql);
 	}
 	
@@ -133,7 +133,7 @@ public class DBQuery {
 			return(0);
 		}
 		sql += "\n WHERE "+ this.fieldKey +" = '"+ values[this.keyFieldIndex] +"'";
-		System.out.print( sql );
+		//System.out.print( sql );
 		return ( this.execute(sql) );
 	}
 

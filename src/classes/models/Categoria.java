@@ -26,6 +26,20 @@ public class Categoria {
 		
 	}
 	
+	public ResultSet listById(String id) {
+		
+		return this.dbQuery.select(("idCategoria = " + id));
+		
+	}
+	
+	public ResultSet listByName(String name) {
+		
+		// A função LOWER() do MySql é utilizada aqui para incluir 
+		// na busca ambos termos com letras maiúsculas e minúsculas.
+		return this.dbQuery.select(("LOWER(descricao) like LOWER('%" + name + "%')"));
+		
+	}
+	
 	public int save() {
 		
 		if(this.getIdCategoria() > 0) {
