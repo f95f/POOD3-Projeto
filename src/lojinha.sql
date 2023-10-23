@@ -33,7 +33,7 @@ CREATE TABLE `institucional` (
 DROP TABLE IF EXISTS `nivelUsuarios`;
 CREATE TABLE `nivelUsuarios` (
   `idNivelUsuario` int NOT NULL AUTO_INCREMENT,
-  `nivel` varchar(20) DEFAULT NULL COMMENT '{''Cliente '', ''Funcion�rio'', ''Caixa '', ''Financeiro '', ''Gerente '', ''Diretor'', ''Administrador''}',
+  `nivel` varchar(20) DEFAULT NULL COMMENT '{''Cliente '', ''Funcionário'', ''Caixa '', ''Financeiro '', ''Gerente '', ''Diretor'', ''Administrador''}',
   PRIMARY KEY (`idNivelUsuario`)
 );
 
@@ -149,7 +149,7 @@ CREATE TABLE `itemsPedido` (
 
 
 
-INSERT INTO `nivelUsuarios` VALUES (1,'Cliente'),(2,'Funcionário'),(3,'Caixa'),(4,'Financeiro'),(5,'Gerente'),(6,'Diretor'),(7,'Administrador');
+INSERT INTO `nivelUsuarios` VALUES (1,'Cliente'),(2,'FuncionÃ¡rio'),(3,'Caixa'),(4,'Financeiro'),(5,'Gerente'),(6,'Diretor'),(7,'Administrador');
 INSERT INTO `usuarios` 	   	VALUES 
 (2,'admins@localhost','admn',1,'Administrador','11111111111','',NULL,NULL,NULL,NULL,NULL,NULL,'N'),
 (3,'cleber@localhost','12346',1,'Cleber','12345678912','','','','','','','','N'),

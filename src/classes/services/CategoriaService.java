@@ -18,7 +18,7 @@ public class CategoriaService {
 		do {
 					
 			System.out.print(" > Informe o nome da categoria: ");
-			nomeCategoria = scanner.next();
+			nomeCategoria = scanner.nextLine();
 		
 			if(nomeCategoria == "") {
 				System.out.println("\n [!] Nome inválido! \n");
