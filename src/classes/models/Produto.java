@@ -40,15 +40,21 @@ public class Produto {
 	
 	public ResultSet listById(String id) {
 		
-		return this.dbQuery.select(("idCategoria = " + id));
+		return this.dbQuery.select(("idProduto = " + id));
 		
 	}
 	
-	public ResultSet listByName(String tableName, String name) {
+	public ResultSet listByName(String name) {
 		
 		// A função LOWER() do MySql é utilizada aqui para incluir 
 		// na busca ambos termos com letras maiúsculas e minúsculas.
-		return this.dbQuery.select(("LOWER(" + tableName + ") like LOWER('%" + name + "%')"));
+		return this.dbQuery.select("LOWER(nome) like LOWER('%" + name + "%')");
+		
+	}
+	
+	public ResultSet listByCategoria(int idCategoria) {
+		
+		return this.dbQuery.select("idCategoria = " + idCategoria);
 		
 	}
 	
