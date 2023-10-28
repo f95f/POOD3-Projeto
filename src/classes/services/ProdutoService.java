@@ -81,7 +81,7 @@ public class ProdutoService {
 	public void listar() {
 		
 		System.out.println("\n > Listando produtos: ");
-		System.out.println("\n Código | Nome            | Fabricante      | Marca           | Modelo          | Cód. Categoria | Descrição            | Medida          | Largura      | Altura       | Profundidade | Peso         | cor               ");
+		System.out.println("\n Código | Nome                           | Fabricante                     | Marca                | Modelo               | Cód. Categoria | Descrição                                                    | Medida          | Largura      | Altura       | Profundidade   | Peso           | cor               ");
 
 		ResultSet rs = produto.listAll();
 		
@@ -105,7 +105,7 @@ public class ProdutoService {
 				produto.setCor(rs.getString("cor"));
 				
 //				A linha abaixo formata cada linha da tabela para que estas mantenham o mesmo tamanho. 
-				System.out.printf("\n %6d | %-15s | %-15s | %-15s | %-15s | %-14d | %-20s | %-15s | %6.4f       | %8.4f       | %6.4f       | %6.4f       | %-15s ",
+				System.out.printf("\n %6d | %-30s | %-30s | %-20s | %-20s | %-14d | %-60s | %-15s | %6.3f       | %8.3f       | %6.3f       | %8.3f       | %-15s ",
 						produto.getIdProduto(),
 						produto.getNome(),
 						produto.getFabricante(),
