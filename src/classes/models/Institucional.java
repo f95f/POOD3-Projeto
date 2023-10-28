@@ -1,5 +1,7 @@
 package classes.models;
 
+import java.sql.ResultSet;
+
 import classes.database.DBQuery;
 
 public class Institucional {
@@ -26,7 +28,45 @@ public class Institucional {
 	
 	private DBQuery dbQuery = new DBQuery( tableName, fieldsName, fieldKey);
 	
+
+	// --- Operações no BD ---------------------
 	
+	public int save() {
+		
+		if(this.getIdInstituicao() > 0) {
+			return this.dbQuery.update(this.toArray());
+		}
+		else {
+			return this.dbQuery.insert(this.toArray());
+		}
+		
+	}
+	
+	public ResultSet list() {
+		
+		return this.dbQuery.select("");
+		
+	}
+	// --- toArray -------------------------
+	
+	private String[] toArray(){
+		
+		return new String[] {
+				
+			 this.getIdInstituicao() + "",
+			 this.getNome(),
+			 this.getCpf_cnpj(),
+			 String.valueOf(this.getTipoPessoa()),
+			 this.getEndereco(),
+			 this.getBairro(),
+			 this.getCidade(),
+			 this.getUf(),
+			 this.getCep(),
+			 this.getTelefone(),
+			 this.getEmail(),
+			 this.getLogo(),
+		};
+	}	
 	// --- Construtores -------------------------
 	
 	public Institucional(){};
@@ -71,7 +111,7 @@ public class Institucional {
 		return cpf_cnpj;
 	}
 
-	public void setCnpj(String cpf_cnpj) {
+	public void setCpf_cnpj(String cpf_cnpj) {
 		this.cpf_cnpj = cpf_cnpj;
 	}
 
