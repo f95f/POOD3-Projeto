@@ -16,6 +16,30 @@ public class NivelUsuario {
 	
 	private DBQuery dbQuery = new DBQuery( tableName, fieldsName, fieldKey);
 	
+
+	// --- Operações no BD ---------------------
+	
+	public int save() {
+		
+		if(this.getIdNivelUsuario() > 0) {
+			return this.dbQuery.update(this.toArray());
+		}
+		else {
+			return this.dbQuery.insert(this.toArray());
+		}
+		
+	}
+	
+	// --- toArray -------------------------
+	
+	private String[] toArray(){
+		
+		return new String[] {
+				
+			this.getIdNivelUsuario() + "",
+			this.getNivel()
+		};
+	}	
 	
 	// --- Construtores -------------------------
 	
