@@ -30,6 +30,7 @@ public class Usuario {
 	
 	private DBQuery dbQuery = new DBQuery( tableName, fieldsName, fieldKey);
 	
+	
 	// --- Operações no BD -------------------------
 	
 	public ResultSet listAll() {
@@ -94,71 +95,6 @@ public class Usuario {
 			this.getFoto(),
 			this.getAtivo()
 		};
-	}
-	
-	// --- Operações no BD -------------------------
-	
-	public ResultSet listAll() {
-		
-		return this.dbQuery.select("");
-		
-	}
-	
-	public ResultSet listById(String id) {
-		
-		return this.dbQuery.select(("idUsuario = " + id));
-		
-	}
-	
-	public ResultSet listByName(String name) {
-		
-		// A função LOWER() do MySql é utilizada aqui para incluir 
-		// na busca ambos termos com letras maiúsculas e minúsculas.
-		return this.dbQuery.select("LOWER(nome) like LOWER('%" + name + "%')");
-		
-	}
-	
-	public int save() {
-		
-		if(this.getIdUsuario() > 0) {
-			return this.dbQuery.update(this.toArray());
-		}
-		else{
-			return this.dbQuery.insert(this.toArray());
-		}
-		
-	}
-	
-	public int delete(){	
-		
-		if(this.getIdUsuario() > 0) {
-			return this.dbQuery.delete(this.toArray());
-		}
-		return 0;
-	}
-	
-	// --- toArray -------------------------
-	
-	private String[] toArray(){
-		
-		return new String[] {
-				
-			this.getIdUsuario() + "",
-			this.getEmail(),
-			this.getSenha(),
-			this.getIdNivelUsuario() + "",
-			this.getNome(),
-			this.getCpf(),
-			this.getEndereco(),
-			this.getBairro(),
-			this.getCidade(),
-			this.getUf(),
-			this.getCep(),
-			this.getTelefone(),
-			this.getFoto(),
-			this.getAtivo(),
-				
-		};		
 	}
 	
 	
