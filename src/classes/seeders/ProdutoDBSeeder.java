@@ -4,7 +4,7 @@ import classes.models.Produto;
 
 public class ProdutoDBSeeder {
 
-	public void importar() {
+	public static void importar() {
 
 		gravar("Samsung", "Smart TV", 1, "Samsung", "Modelo XYZ", "Smart TV de última geração", "unidade", 120, 80, 10, 15, "preto");
 		gravar("Nestlé", "Chocolate", 5, "Nestlé", "Modelo ABC", "Chocolate ao leite", "unidade", 5, 2, 1, 0.1, "marrom");
@@ -87,7 +87,7 @@ public class ProdutoDBSeeder {
 		
 	}
 	
-	private void gravar(String fabricante, String nome, int idCategoria, String marca, String modelo,
+	private static void gravar(String fabricante, String nome, int idCategoria, String marca, String modelo,
 			String descricao, String unidadeMedida, double largura, double altura, double profundidade, double peso,
 			String cor) {
 		

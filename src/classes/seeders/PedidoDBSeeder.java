@@ -4,7 +4,7 @@ import classes.models.Pedido;
 
 public class PedidoDBSeeder {
 
-	public void importar() {
+	public static void importar() {
 		gravar(1, "10/10/2023", "10/10/2023", "11/10/2023",
 				"NF20231028012345", "11/10/2023", "11/10/2023", 1, "20231028012345",
 				"Rua A","B","C","DE", "Guarulhos", "SP", "01234987","115555-5555", "Ref. null",
@@ -22,7 +22,7 @@ public class PedidoDBSeeder {
 	
 	}
 	
-	private void gravar(int idUsuario, String dtPedido, String dtPagamento, String dtNotaFiscal,
+	private static void gravar(int idUsuario, String dtPedido, String dtPagamento, String dtNotaFiscal,
 			String notaFiscal, String dtEnvio, String dtRecebimento, int tipoFrete, String rastreioFrete,
 			String entregaendereco, String entregaNumero, String entregaCompl, String entregaBairro,
 			String entregaCidade, String entregaUF, String entregaCEP, String entregaTelefone, String entregaRefer,

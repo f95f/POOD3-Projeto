@@ -3,7 +3,7 @@ package classes.seeders;
 import classes.models.Estoque;
 
 public class EstoqueDBSeeder {
-	public void importar() {
+	public static void importar() {
 		gravar(1,"2023/10/10",20,"2023/10/02","2023/12/29","NF00000123456", 2400.00, 0.0, 0.0, 0, 0,"");
 		gravar(2,"2023/10/10",10,"2023/10/02","2023/12/29","NF00000123456", 2400.00, 0.0, 0.0, 0, 0,"");
 		gravar(3,"2023/10/10",40,"2023/10/02","2023/12/29","NF00000123456", 2400.00, 0.0, 0.0, 0, 0,"");
@@ -15,7 +15,7 @@ public class EstoqueDBSeeder {
 		
 	}
 	
-	private void gravar(int idProduto, String dtEntrada, int quantidade, String dtFabricacao,
+	private static void gravar(int idProduto, String dtEntrada, int quantidade, String dtFabricacao,
 			String dtVencimento, String nfCompra, Double precoCompra, Double icmsCompra, Double precoVenda,
 			int qtdVendida, int qtdOcorrencia, String ocorrencia) {
 		

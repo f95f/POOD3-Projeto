@@ -4,7 +4,7 @@ import classes.models.ItensPedido;
 
 public class ItensPedidoDBSeeder {
 	
-	public void importar() {
+	public static void importar() {
 		
 		gravar(1, 1, 3, 2, "", "");
 		gravar(2, 2, 2, 1, "", "");
@@ -14,7 +14,7 @@ public class ItensPedidoDBSeeder {
 		gravar(6, 6, 4, 1, "2023/10/26", "Desistência");
 		
 	}
-	private void gravar(int ordem, int idPedido, int idEstoque, int qtdItem, String dtDevolucao, String motivoDevolucao) {
+	private static void gravar(int ordem, int idPedido, int idEstoque, int qtdItem, String dtDevolucao, String motivoDevolucao) {
 	
 		
 		ItensPedido i = new ItensPedido(0, ordem, idPedido, idEstoque, qtdItem, dtDevolucao, motivoDevolucao);

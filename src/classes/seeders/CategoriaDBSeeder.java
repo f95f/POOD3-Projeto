@@ -4,7 +4,7 @@ import classes.models.Categoria;
 
 public class CategoriaDBSeeder {
 
-	public void importar() {
+	public static void importar() {
 		
 		gravar("Eletrônicos");
 		gravar("Eletrodomésticos");
@@ -31,7 +31,7 @@ public class CategoriaDBSeeder {
 		
 	}
 	
-	private void gravar(String nomeCategoria) {
+	private static void gravar(String nomeCategoria) {
 		
 		Categoria c = new Categoria(0, nomeCategoria);
 		c.save();

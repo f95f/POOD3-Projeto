@@ -4,7 +4,7 @@ import classes.models.NivelUsuario;
 
 public class NivelUsuarioDBSeeder {
 
-	public void importar() {
+	public static void importar() {
 		
 		gravar("Cliente");
 		gravar("Funcionário");
@@ -16,7 +16,7 @@ public class NivelUsuarioDBSeeder {
 		
 	}
 	
-	private void gravar(String nivel) {
+	private static void gravar(String nivel) {
 		
 		NivelUsuario n = new NivelUsuario(0, nivel);
 		n.save();

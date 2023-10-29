@@ -4,15 +4,16 @@ public class Seeder {
 	
 	public static void carregarDados() {
 		
-		CategoriaDBSeeder dbCategoria = new CategoriaDBSeeder();
-		ProdutoDBSeeder dbProduto = new ProdutoDBSeeder();
-		NivelUsuarioDBSeeder dbNivelUsuario = new NivelUsuarioDBSeeder();
-		InstitucionalDBSeeder dbInstitucional = new InstitucionalDBSeeder();
+		CategoriaDBSeeder.importar();
+		ProdutoDBSeeder.importar();
+		//NivelUsuarioDBSeeder.importar(); // Já está no BD
+		InstitucionalDBSeeder.importar();
+		EstoqueDBSeeder.importar();
+		NivelUsuarioDBSeeder.importar();
+		PedidoDBSeeder.importar();
+		UsuarioDBSeeder.importar();
+		ItensPedidoDBSeeder.importar();
 		
-		dbCategoria.importar();
-		dbProduto.importar();
-		//dbNivelUsuario.importar(); // Já está no BD
-		dbInstitucional.importar();
 	}
 
 }
