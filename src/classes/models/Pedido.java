@@ -65,7 +65,20 @@ public class Pedido {
 		}
 		return 0;
 	}
+
+	public ResultSet listById(String id) {
+		
+		return this.dbQuery.select(("idUsuario = " + id));
+		
+	}
 	
+	public ResultSet listByName(String name) {
+		
+		// A função LOWER() do MySql é utilizada aqui para incluir 
+		// na busca ambos termos com letras maiúsculas e minúsculas.
+		return this.dbQuery.select(("LOWER(nome) like LOWER('%" + name + "%')"));
+		
+	}
 	
 	// --- toArray -------------------------
 	

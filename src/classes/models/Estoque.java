@@ -36,6 +36,16 @@ public class Estoque {
 		return this.dbQuery.select("");
 		
 	}
+	public ResultSet listById(String idEstoque) {
+		
+		return this.dbQuery.select(("idEstoque = " + idEstoque));
+		
+	}
+	public ResultSet listByProduto(String idProduto) {
+		
+		return this.dbQuery.select(("idProduto = " + idProduto));
+		
+	}
 	
 	public int save() {
 		
@@ -83,8 +93,7 @@ public class Estoque {
 	
 	public Estoque(int idEstoque, int idProduto, String dtEntrada, int quantidade, String dtFabricacao,
 			String dtVencimento, String nfCompra, Double precoCompra, Double icmsCompra, Double precoVenda,
-			int qtdVendida, int qtdOcorrencia, String ocorrencia, String tableName, String fieldsName, String fieldKey,
-			DBQuery dbQuery) {
+			int qtdVendida, int qtdOcorrencia, String ocorrencia) {
 		super();
 		this.idEstoque = idEstoque;
 		this.idProduto = idProduto;
@@ -99,10 +108,6 @@ public class Estoque {
 		this.qtdVendida = qtdVendida;
 		this.qtdOcorrencia = qtdOcorrencia;
 		this.ocorrencia = ocorrencia;
-		this.tableName = tableName;
-		this.fieldsName = fieldsName;
-		this.fieldKey = fieldKey;
-		this.dbQuery = dbQuery;
 	}
 	
 	

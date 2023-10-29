@@ -17,7 +17,7 @@ public class ItensPedido {
 	
 	// --- Conexão com o BD ---------------------
 	
-	String tableName = "lojinha.itenspedido";
+	String tableName = "lojinha.itemspedido";
 	String fieldsName = "idItemPedido,ordem,idPedido,idEstoque,qtdItem,dtDevolucao,motivoDevolucao";
 	String fieldKey = "idItemPedido";
 	
