@@ -37,6 +37,12 @@ public class Estoque {
 		
 	}
 	
+	public ResultSet listById(String coluna, String id) {
+		
+		return this.dbQuery.select((coluna + " = " + id));
+		
+	}
+	
 	public int save() {
 		
 		if(this.getIdEstoque() > 0) {
@@ -83,8 +89,7 @@ public class Estoque {
 	
 	public Estoque(int idEstoque, int idProduto, String dtEntrada, int quantidade, String dtFabricacao,
 			String dtVencimento, String nfCompra, Double precoCompra, Double icmsCompra, Double precoVenda,
-			int qtdVendida, int qtdOcorrencia, String ocorrencia, String tableName, String fieldsName, String fieldKey,
-			DBQuery dbQuery) {
+			int qtdVendida, int qtdOcorrencia, String ocorrencia) {
 		super();
 		this.idEstoque = idEstoque;
 		this.idProduto = idProduto;
@@ -99,12 +104,7 @@ public class Estoque {
 		this.qtdVendida = qtdVendida;
 		this.qtdOcorrencia = qtdOcorrencia;
 		this.ocorrencia = ocorrencia;
-		this.tableName = tableName;
-		this.fieldsName = fieldsName;
-		this.fieldKey = fieldKey;
-		this.dbQuery = dbQuery;
 	}
-	
 	
 	// --- Getters e Setters ------------------------
 	
