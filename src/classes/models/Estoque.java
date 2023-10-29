@@ -47,6 +47,12 @@ public class Estoque {
 		
 	}
 	
+	public ResultSet listById(String coluna, String id) {
+		
+		return this.dbQuery.select((coluna + " = " + id));
+		
+	}
+	
 	public int save() {
 		
 		if(this.getIdEstoque() > 0) {
@@ -109,7 +115,6 @@ public class Estoque {
 		this.qtdOcorrencia = qtdOcorrencia;
 		this.ocorrencia = ocorrencia;
 	}
-	
 	
 	// --- Getters e Setters ------------------------
 	

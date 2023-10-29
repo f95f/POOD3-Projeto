@@ -47,6 +47,12 @@ public class Pedido {
 		
 	}
 	
+	public ResultSet listById(String coluna, String id) {
+		
+		return this.dbQuery.select((coluna + " = " + id));
+		
+	}
+	
 	public int save() {
 		
 		if(this.getIdPedido() > 0) {

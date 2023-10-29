@@ -77,7 +77,6 @@ public class Produto {
 		return 0;
 	}
 	
-	
 	// --- toArray -------------------------
 	
 	private String[] toArray(){

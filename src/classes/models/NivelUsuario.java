@@ -1,5 +1,7 @@
 package classes.models;
 
+import java.sql.ResultSet;
+
 import classes.database.DBQuery;
 
 public class NivelUsuario {
@@ -19,6 +21,11 @@ public class NivelUsuario {
 
 	// --- Operações no BD ---------------------
 	
+	public ResultSet listAll() {
+		
+		return this.dbQuery.select("");
+		
+	}
 	public int save() {
 		
 		if(this.getIdNivelUsuario() > 0) {
