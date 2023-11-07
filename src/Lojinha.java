@@ -1,9 +1,8 @@
-
-import classes.seeders.InstitucionalDBSeeder;
 import classes.seeders.Seeder;
 import classes.services.CategoriaService;
 import classes.services.InstitucionalService;
 import classes.services.ProdutoService;
+import classes.views.Login;
 
 public class Lojinha {
 
@@ -38,6 +37,8 @@ public class Lojinha {
 		//produto.buscar("CARRO");
 		//produto.buscarPorCategoria(5);
 		//produto.apagar(73);
+		
+		Login login = new Login();
 		
 	}
 
