@@ -16,7 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import classes.models.Usuario;
+import classes.services.UsuarioService;
+
 public class Login implements ActionListener{
+	
+	private UsuarioService usuarioService = new UsuarioService();
+	private Usuario usuario = new Usuario();
 	
 	private JFrame frame;
 	
@@ -26,6 +32,10 @@ public class Login implements ActionListener{
 
 	private JTextField txtLogin, txtSenha;
 	private JButton btnLogin;
+	
+	private JLabel lblEmail;
+	private JLabel lblSenha;
+	
 	private JLabel title;
 	private JLabel errorMessage;
 	private JLabel footer;
@@ -33,12 +43,14 @@ public class Login implements ActionListener{
 	private Font accentFont;
 	private Font contentFont;
 	
+	private String email = "", senha = "";
+	
 	public Login() {
 		render();
 	}
 	
 	private void render() {
-		listarFontes();
+		//listarFontes();
 		accentFont = new Font("Verdana", Font.PLAIN, 36);
 		contentFont = new Font("Arial", Font.PLAIN, 16);
 		
@@ -51,7 +63,7 @@ public class Login implements ActionListener{
 		this.frame.setLocationRelativeTo(null);
 		
 		head = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-		body = new JPanel(new FlowLayout(FlowLayout.CENTER, 600, 30));
+		body = new JPanel(new FlowLayout(FlowLayout.CENTER, 150, 10));
 		foot = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
 		
 		head.setBackground(Color.DARK_GRAY);
@@ -63,19 +75,30 @@ public class Login implements ActionListener{
 		title.setForeground(Color.LIGHT_GRAY);
 		title.setHorizontalAlignment(JLabel.CENTER);
 		head.add(title);
+
+		lblEmail = new JLabel("Email:");
+		lblSenha = new JLabel("Senha:");
 		
 		txtLogin = new JTextField(14);
 		txtLogin.setToolTipText("Informe o seu nome de usuário.");
+		
 		txtLogin.setMargin(new Insets(6, 8, 6, 8));
 		txtSenha = new JTextField(14);
 		txtSenha.setToolTipText("Informe a sua senha.");
 		txtSenha.setMargin(new Insets(6, 8, 6, 8));
+		
 		btnLogin = new JButton("Entrar");
 		btnLogin.setMargin(new Insets(6, 8, 6, 8));
 		btnLogin.setPreferredSize(new Dimension(158, 30));
+		addLoginAction(btnLogin);
+		errorMessage = new JLabel();
+		
+		body.add(lblEmail);
 		body.add(txtLogin);
+		body.add(lblSenha);
 		body.add(txtSenha);
 		body.add(btnLogin);
+		body.add(errorMessage);
 		
 		footer = new JLabel("<html><body style='font-size: 10px'> © 2023 </body></html>");
 		footer.setFont(accentFont);
@@ -96,6 +119,32 @@ public class Login implements ActionListener{
 		
 	}
 
+	public void login() {
+
+		email = txtLogin.getText();
+		senha = txtSenha.getText();
+		usuario = usuarioService.login(email, senha);
+		
+		if(usuario == null) {
+			errorMessage.setText("Usuário ou senha incorretos.");
+		}
+		else {
+			errorMessage.setText("Usuário " + usuario.getNome() + " autenticado com sucesso.");
+		}
+		
+	}
+	
+	public void addLoginAction(JButton button) {	
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				login();
+				
+			}
+		});		
+	}
+	
 	private void listarFontes() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fontNames = ge.getAvailableFontFamilyNames();
@@ -105,5 +154,6 @@ public class Login implements ActionListener{
             System.out.println(fontName);
         }
 	}
+	
 }
 

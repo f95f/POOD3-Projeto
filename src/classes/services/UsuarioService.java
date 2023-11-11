@@ -10,6 +10,41 @@ public class UsuarioService {
 
 	private Usuario usuario = new Usuario();
 	private Scanner scanner = new Scanner(System.in);
+	
+	public Usuario login(String email, String senha) {
+		
+		ResultSet rs = usuario.listByFields("email", email);
+		
+		try {
+			if(rs.next()) {
+				usuario.setIdUsuario(rs.getInt("idUsuario"));
+				usuario.setEmail(rs.getString("email"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setIdNivelUsuario(rs.getInt("idNivelUsuario"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setCpf(rs.getString("cpf"));
+				usuario.setEndereco(rs.getString("endereco"));
+				usuario.setBairro(rs.getString("bairro"));
+				usuario.setCidade(rs.getString("cidade"));
+				usuario.setUf(rs.getString("uf"));
+				usuario.setCep(rs.getString("cep"));
+				usuario.setTelefone(rs.getString("telefone"));
+				usuario.setFoto(rs.getString("foto"));
+				usuario.setAtivo(rs.getString("ativo"));
+				
+				System.out.println("\n\n >> " + usuario.getSenha() + "\n\n");
+				System.out.println(" >> " + senha + "\n\n");
+				if(usuario.getSenha().equals(senha)){
+					return usuario;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 		
 	public void criar() {
 		
@@ -205,5 +240,6 @@ public class UsuarioService {
 		}
 		while(true);
 	}
+	
 	
 }

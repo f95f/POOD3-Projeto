@@ -8,6 +8,14 @@ public class Lojinha {
 
 	public static void main(String[] args) {
 		
+		/*private UsuarioLogado usuarioLogado = new UsuarioLogado()
+		
+		if(usuarioLogado == null){
+			iniciarSecao();
+		}
+		private void iniciarSecao(){
+			
+		}
 		// O método carregarDados() Salva dados para teste 
 		// no banco de dados automaticamente.
 		// Deve ser chamado apenas uma vez.
@@ -20,7 +28,7 @@ public class Lojinha {
 		
 		
 		// ~~ Mostrar dados institucionais 
-		instituicao.listar();
+		//instituicao.listar();
 		
 		/* ~~ CRUD com categorias: */
 		//categoria.criar();	

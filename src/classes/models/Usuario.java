@@ -24,7 +24,7 @@ public class Usuario {
 
 	// --- Conexão com o BD ---------------------
 	
-	String tableName = "lojinha.usuario";
+	String tableName = "lojinha.usuarios";
 	String fieldsName = "idUsuario,email,senha,idNivelUsuario,nome,cpf,endereco,bairro,cidade,uf,cep,telefone,foto,ativo";
 	String fieldKey = "idUsuario";
 	
@@ -50,6 +50,12 @@ public class Usuario {
 		// A função LOWER() do MySql é utilizada aqui para incluir 
 		// na busca ambos termos com letras maiúsculas e minúsculas.
 		return this.dbQuery.select(("LOWER(nome) like LOWER('%" + name + "%')"));
+		
+	}
+	
+	public ResultSet listByFields(String campo, String name) {
+		
+		return this.dbQuery.select(( campo + " = '" + name + "' "));
 		
 	}
 	
