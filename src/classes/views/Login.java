@@ -204,7 +204,6 @@ public class Login implements ActionListener{
 			usuarioLogado.setToken("1");
 			
 			Painel painel = new Painel(usuarioLogado);
-			System.out.println("\n\n > Chamar painel principal. \n\n");
 			this.frame.dispose();
 		}		
 	}
