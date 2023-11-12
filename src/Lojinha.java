@@ -2,6 +2,7 @@ import classes.seeders.Seeder;
 import classes.services.CategoriaService;
 import classes.services.InstitucionalService;
 import classes.services.ProdutoService;
+import classes.utils.AuthenticatedUser;
 import classes.views.Login;
 
 public class Lojinha {
@@ -46,8 +47,10 @@ public class Lojinha {
 		//produto.buscarPorCategoria(5);
 		//produto.apagar(73);
 		
+		//AuthenticatedUser usuarioLogado = new AuthenticatedUser();
 		Login login = new Login();
-		
+	
+		//usuarioLogado = login.getUserAuthentication();
 	}
 
 }
