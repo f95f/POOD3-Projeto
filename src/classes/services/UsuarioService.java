@@ -2,6 +2,7 @@ package classes.services;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import classes.models.Usuario;
@@ -103,56 +104,38 @@ public class UsuarioService {
 		}
 	}
 
-	public void listar() {
+	public ArrayList<Usuario> listar() {
 		
-		System.out.println("\n > Listando usuários: ");
-		//System.out.println("\n Código | Nome                           | Fabricante                     | Marca                | Modelo               | Cód. Categoria | Descrição                                                    | Medida          | Largura      | Altura       | Profundidade   | Peso           | cor               ");
-
+		ArrayList<Usuario> usersList = new ArrayList<Usuario>();
 		ResultSet rs = usuario.listAll();
 		
 		try {
 			while(rs.next()) {
 				
-				usuario.setIdUsuario(rs.getInt("idUsuario"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setIdNivelUsuario(rs.getInt("idNivelUsuario"));
-				usuario.setNome(rs.getString("nome"));
-				usuario.setCpf(rs.getString("cpf"));
-				usuario.setEndereco(rs.getString("endereco"));
-				usuario.setBairro(rs.getString("bairro"));
-				usuario.setCidade(rs.getString("cidade"));
-				usuario.setUf(rs.getString("uf"));
-				usuario.setCep(rs.getString("cep"));
-				usuario.setTelefone(rs.getString("telefone"));
-				usuario.setFoto(rs.getString("foto"));
-				usuario.setAtivo(rs.getString("ativo"));
+				Usuario usuarioSimples = new Usuario();
 				
-//				A linha abaixo formata cada linha da tabela para que estas mantenham o mesmo tamanho. 
-				System.out.printf("\n %6d | %-30s | %-30s | %-6d | %-30s |"
-								+ " %-14s | %-30s | %-30s | %-30s | %-15s|"
-								+ " %-10s | %-15s | %-30s | %-30s ",
-						usuario.getIdUsuario(),
-						usuario.getEmail(),
-						usuario.getSenha(),
-						usuario.getIdNivelUsuario(),
-						usuario.getNome(),
-						
-						usuario.getCpf(),
-						usuario.getEndereco(),
-						usuario.getBairro(),
-						usuario.getCidade(),
-						usuario.getUf(),
-						
-						usuario.getCep(),
-						usuario.getTelefone(),
-						usuario.getFoto(),
-						usuario.getAtivo()
+				usuarioSimples.setIdUsuario(rs.getInt("idUsuario"));
+				usuarioSimples.setEmail(rs.getString("email"));
+				usuarioSimples.setIdNivelUsuario(rs.getInt("idNivelUsuario"));
+				usuarioSimples.setNome(rs.getString("nome"));
+				usuarioSimples.setEndereco(
+					rs.getString("endereco") + ", " +
+					rs.getString("bairro") + " - " + 
+					rs.getString("cidade") + ", " + 
+					rs.getString("uf")
 				);
+				usuarioSimples.setTelefone(rs.getString("telefone"));
+				usuarioSimples.setAtivo(rs.getString("ativo"));
+				usersList.add(usuarioSimples);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		for(Usuario u : usersList) {
+			System.out.println("\n > " + u.getIdUsuario() + " - " + u.getNome() + "\n");
+		}
+		return usersList;
 	}
 	public Usuario buscarPorId(int id) {
 		System.out.println("\n > Pesquisando usuário pelo código " + id + ":");

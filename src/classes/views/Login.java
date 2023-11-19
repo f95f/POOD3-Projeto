@@ -28,13 +28,13 @@ import classes.models.Usuario;
 import classes.services.UsuarioService;
 import classes.utils.AuthenticatedUser;
 
-public class Login implements ActionListener{
+public class Login{
 	
 	private UsuarioService usuarioService = new UsuarioService();
 	private Usuario usuario = new Usuario();
 	private AuthenticatedUser usuarioLogado = new AuthenticatedUser();
 	
-	private Color corEscura = new Color(20, 63, 181);
+	private Color corEscura = new Color(31, 71, 102);
 	private Color corClara = Color.WHITE;
 	private Color corTexto = Color.WHITE;
 	private Dimension formSize = new Dimension(180, 70);
@@ -79,9 +79,6 @@ public class Login implements ActionListener{
 		this.frame.setResizable(false);
 		this.frame.setLocationRelativeTo(null);
 		
-//		head = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-//		body = new JPanel(new FlowLayout(FlowLayout.CENTER, 150, 10));
-//		foot = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
 		head = new JPanel(new FlowLayout());
 		body = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		foot = new JPanel(new FlowLayout());
@@ -139,11 +136,12 @@ public class Login implements ActionListener{
 		btnLogin.setPreferredSize(new Dimension(180, 36));
 		btnLogin.setBackground(corEscura);
 		btnLogin.setForeground(corTexto);
+		btnLogin.setFont(contentFont);
 		btnLogin.addMouseListener(new MouseAdapter() {
 		
             @Override
             public void mouseEntered(MouseEvent e) {
-            	btnLogin.setBackground(new Color(0,0,0, 100));
+            	btnLogin.setBackground(new Color(8, 13, 99));
             }
 
             @Override
@@ -159,8 +157,7 @@ public class Login implements ActionListener{
 		buttonContainer.add(btnLogin);
 		buttonContainer.add(errorMessage);
 		buttonContainer.setPreferredSize(formSize);
-		buttonContainer.setBackground(corClara);
-		
+		buttonContainer.setBackground(corClara);	
 		
 		body.add(emailContainer);
 		body.add(senhaContainer);
@@ -177,11 +174,6 @@ public class Login implements ActionListener{
 		frame.add(body, BorderLayout.CENTER);
 		frame.add(foot, BorderLayout.SOUTH);
 		this.frame.setVisible(true);
-		
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
 		
 	}
 

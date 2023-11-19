@@ -6,13 +6,16 @@ import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,14 +27,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import classes.utils.AuthenticatedUser;
+import classes.views.usuarios.ListUsers;
 
 public class Painel {
 	
 	private JFrame frame;
 	private JLabel nomeUsuarioLogado = new JLabel();
 	private EmptyBorder margem = new EmptyBorder(16, 24, 16, 24);
-//	private Color corEscura = Color.BLUE;
-	private Color corEscura = new Color(20, 63, 181);
+	private Color corEscura = new Color(31, 71, 102);
 	private Color corClara = Color.WHITE;
 	private Color corTexto = Color.WHITE;
 	private AuthenticatedUser usuarioLogado;
@@ -75,11 +78,17 @@ public class Painel {
 		head.add(nomeUsuarioLogado, BorderLayout.WEST);
 		head.add(btnLogout, BorderLayout.EAST);
 
-		JPanel menuItems = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		//menuItems.setBorder(new EmptyBorder(8, 8, 8, 8));
-		//menuItems.setBackground(new Color(0, 200, 255, 50));
+		JPanel menuItems = new JPanel(new GridLayout(0, 3));
+		menuItems.setBorder(new EmptyBorder(8, 8, 8, 8));
+		menuItems.setBackground(new Color(0, 200, 255, 50));
+		
+		JLabel menuLabel = new JLabel("Menu Principal (somente usúarios disponível)");
+		menuLabel.setForeground(corEscura);
+		menuLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		menuLabel.setFont(accentFont);
 		
 		criarMenu(menuItems);
+		body.add(menuLabel);
 		body.add(menuItems);
 		
 		JLabel footer = new JLabel("<html><body style='font-size: 10px'> © 2023 </body></html>");
@@ -101,70 +110,130 @@ public class Painel {
 	}
 	
 	private void criarMenu(JPanel menuContainer) {
+
+		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		
-		JPanel pedidoMenu = new JPanel(new BorderLayout());
-		JLabel pedidoMenuLabel = new JLabel("Pedidos");
-		pedidoMenuLabel.setFont(accentFont);
+		JButton novoPedidoButton = new JButton("Novo Pedido");
+		novoPedidoButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(novoPedidoButton);
 		
-		JButton btnNovoPedido = new JButton("Novo Pedido");
-		JButton btnVerificarPedidos = new JButton("Verificar Pedidos");
+		JButton verPedidoButton = new JButton("Verificar Pedidos");
+		verPedidoButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(verPedidoButton);
 		
-		setMenuItemStyle(btnNovoPedido);
-		setMenuItemStyle(btnVerificarPedidos);
+		JButton novoProdutoButton = new JButton("Novo Produto");
+		novoProdutoButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(novoProdutoButton);
 		
-		pedidoMenu.add(pedidoMenuLabel, BorderLayout.NORTH);
-		pedidoMenu.add(btnNovoPedido);
-		pedidoMenu.add(btnVerificarPedidos, BorderLayout.SOUTH);
+		JButton listProdutoButton = new JButton("Buscar Produtos");
+		listProdutoButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(listProdutoButton);
 		
-		JPanel produtoMenu = new JPanel(new BorderLayout());
-		JLabel produtoMenuLabel = new JLabel("Produtos");
-		produtoMenuLabel.setFont(accentFont);
+		JButton verEstoqueButton = new JButton("Verificar Estoque");
+		verEstoqueButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(verEstoqueButton);
 		
-		JButton btnNovoProduto = new JButton("Novo Produto");
-		JButton btnVerificarProdutos = new JButton("Buscar Produtos");
-		JButton btnVerificarEstoque = new JButton("Verificar Estoque");
-		JButton btnCategorias = new JButton("Categorias");
+		JButton categoriasButton = new JButton("Categorias");
+		categoriasButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(categoriasButton);
 		
-		setMenuItemStyle(btnNovoProduto);
-		setMenuItemStyle(btnVerificarProdutos);
-		setMenuItemStyle(btnVerificarEstoque);
-		setMenuItemStyle(btnCategorias);
+		JButton newUserButton = new JButton("Novo Usuário");
+		newUserButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers newUserButton = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(newUserButton);
 		
-		produtoMenu.add(produtoMenuLabel, BorderLayout.NORTH);
-		produtoMenu.add(btnNovoProduto);
-		produtoMenu.add(btnVerificarProdutos);
-		produtoMenu.add(btnVerificarEstoque);
-		produtoMenu.add(btnCategorias, BorderLayout.SOUTH);
+		JButton listUserButton = new JButton("Listar Usuários");
+		listUserButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers listUserButton = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(listUserButton);
 		
-		JPanel usuariosMenu = new JPanel(new BorderLayout());
-		JLabel usuariosMenuLabel = new JLabel("Usuarios");
-		usuariosMenuLabel.setFont(accentFont);
+		JButton institucionalButton = new JButton("Institucional");
+		institucionalButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ListUsers institucionalButton = new ListUsers(usuarioLogado);
+				frame.dispose();
+				
+			}
+		});
+		buttonList.add(institucionalButton);
 		
-		JButton btnNovoUsuario = new JButton("Novo Usuário");
-		JButton btnListarUsuarios = new JButton("Listar Usuários");
-		
-		setMenuItemStyle(btnNovoUsuario);
-		setMenuItemStyle(btnListarUsuarios);
-		
-		usuariosMenu.add(usuariosMenuLabel, BorderLayout.NORTH);
-		usuariosMenu.add(btnNovoUsuario);
-		usuariosMenu.add(btnListarUsuarios, BorderLayout.SOUTH);
-		
-		JPanel institucionalMenu = new JPanel(new BorderLayout());
-		JLabel institucionalMenuLabel = new JLabel("Institucional");
-		institucionalMenuLabel.setFont(accentFont);
-		
-		JButton btnVer = new JButton("Ver");
-		
-		setMenuItemStyle(btnVer);
-		institucionalMenu.add(institucionalMenuLabel, BorderLayout.NORTH);
-		institucionalMenu.add(btnVer, BorderLayout.SOUTH);
-		
-		menuContainer.add(pedidoMenu);
-		menuContainer.add(produtoMenu);
-		menuContainer.add(usuariosMenu);
-		menuContainer.add(institucionalMenu);
-	
+		for(int i = 0; i < buttonList.size(); i++) {
+			
+			JButton currentButton = buttonList.get(i);
+			setMenuItemStyle(currentButton);
+
+			JPanel buttonPanel = new JPanel(new BorderLayout());
+			buttonPanel.add(currentButton, BorderLayout.CENTER);
+			buttonPanel.setBackground(null);
+			buttonPanel.setOpaque(false);
+			buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+			menuContainer.add(buttonPanel);
+		}
 	}
 	
 	private void setMenuItemStyle(JButton button){
@@ -173,11 +242,10 @@ public class Painel {
 		button.setForeground(corTexto);
 		button.setFont(contentFont);
 		//button.setMnemonic(KeyEvent.VK_S);
-		button.setPreferredSize(new Dimension(150, 30));
+		button.setPreferredSize(new Dimension(150, 90));
 		button.setFocusable(false);
 		button.setVerticalTextPosition(SwingConstants.CENTER);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
-
 
 		//ImageIcon logoutIcon = new ImageIcon("icon.png");
 		
@@ -185,7 +253,7 @@ public class Painel {
 		
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(0,0,0, 100));
+            	button.setBackground(new Color(8, 13, 99));
             }
 
             @Override
@@ -214,17 +282,17 @@ public class Painel {
 		button.setForeground(corTexto);
 		button.setFont(contentFont);
 		button.setMnemonic(KeyEvent.VK_S);
-		button.setPreferredSize(new Dimension(100, 36));
+		button.setPreferredSize(new Dimension(100, 32));
 		button.setFocusable(false);
 		button.setBorder(new LineBorder(corClara));
-
+		
 		ImageIcon logoutIcon = new ImageIcon("icon.png");
 		
 		button.addMouseListener(new MouseAdapter() {
 		
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(0,0,0, 100));
+                button.setBackground(new Color(8, 13, 99));
             }
 
             @Override
