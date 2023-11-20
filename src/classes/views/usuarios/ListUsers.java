@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,6 +33,7 @@ public class ListUsers {
 	private JLabel nomeUsuarioLogado = new JLabel();
 	private EmptyBorder margem = new EmptyBorder(16, 24, 16, 24);
 	private Color corEscura = new Color(31, 71, 102);
+	private Color corMedia = new Color(131, 152, 168);
 	private Color corClara = Color.WHITE;
 	private Color corTexto = Color.WHITE;
 	private AuthenticatedUser usuarioLogado;
@@ -46,18 +48,19 @@ public class ListUsers {
 		render();
 		
 	}
+	
 	private void render() {
 
 		frame = new JFrame();
 
 		this.frame.setTitle("Lojinha - Listar Usuários");
 		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.frame.setSize(800, 600);
+		this.frame.setSize(840, 690);
 		this.frame.setResizable(false);
 		this.frame.setLocationRelativeTo(null);
 		
 		JPanel head = new JPanel(new BorderLayout());
-		JPanel body = new JPanel(new FlowLayout());
+		JPanel body = new JPanel(new BorderLayout());
 		JPanel foot = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		
 		head.setBackground(corEscura);
@@ -74,6 +77,20 @@ public class ListUsers {
 		head.add(nomeUsuarioLogado, BorderLayout.WEST);
 		head.add(btnLogout, BorderLayout.EAST);
 				
+		JPanel controlButtonsPannel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JButton btnNovoUsuario = new JButton("Novo");
+		JButton btnEditarUsuario = new JButton("Editar");
+		JButton btnExcluirUsuario = new JButton("Excluir");
+		
+		addCreateUserAction(btnNovoUsuario);
+		
+		controlButtonsPannel.setBorder(margem);
+		controlButtonsPannel.add(btnNovoUsuario);
+		controlButtonsPannel.add(btnEditarUsuario);
+		controlButtonsPannel.add(btnExcluirUsuario);
+		controlButtonsPannel.setBackground(corMedia);
+		body.add(controlButtonsPannel, BorderLayout.NORTH);
+		
 		DefaultTableModel model = new DefaultTableModel();
 		JTable table = new JTable(model);
 
@@ -87,7 +104,7 @@ public class ListUsers {
 	    		user.getNome(),
 	    		user.getEmail(),
 	    		user.getIdNivelUsuario(),
-	    		user.getTelefone(),
+	    		user.getTelefone(),	
 	    		user.getEndereco(),
 	    		user.getAtivo()
     		};
@@ -98,8 +115,9 @@ public class ListUsers {
 		table.setAutoCreateRowSorter(true);
 
 		JScrollPane pane = new JScrollPane(table);
-		
-		body.add(pane);
+
+		pane.setBorder(margem);
+		body.add(pane, BorderLayout.SOUTH);
 		
 		JLabel footer = new JLabel("<html><body style='font-size: 10px'> © 2023 </body></html>");
 		footer.setFont(accentFont);
@@ -108,7 +126,6 @@ public class ListUsers {
 		foot.add(footer);
 		
 		head.setBorder(margem);
-		body.setBorder(margem);
 		foot.setBorder(margem);
 		
 		frame.add(head, BorderLayout.NORTH);
@@ -119,6 +136,20 @@ public class ListUsers {
 		
 	}
 
+	private void addCreateUserAction(JButton button) {
+		
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				CreateUser createUser = new CreateUser(usuarioLogado);
+				frame.dispose();
+			}
+		});
+		
+	}
+	
 	private ArrayList<Usuario> getUsersList() {
 		
 		ArrayList<Usuario> usersList = new ArrayList<Usuario>();

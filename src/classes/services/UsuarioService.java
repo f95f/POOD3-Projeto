@@ -47,50 +47,13 @@ public class UsuarioService {
 		return null;
 	}
 		
-	public void criar() {
+	public void criar(Usuario user) {
 		
-		usuario.setIdUsuario(0);
-
-		System.out.print("\n > Informe o nome do usuario: ");
-		usuario.setNome(scanner.nextLine());
-
-		System.out.print("\n > Informe o email do usuário: ");
-		usuario.setEmail(scanner.nextLine());
-		
-		System.out.print("\n > Informe a senha: ");
-		usuario.setSenha(scanner.nextLine());
-		
-		System.out.print("\n > Informe o nível do usuário: ");
-		usuario.setIdNivelUsuario(Integer.parseInt(scanner.nextLine()));
-
-		System.out.print("\n > Informe o cpf: ");
-		usuario.setCpf(scanner.nextLine());
-
-		System.out.print("\n > Informe o endereço: ");
-		usuario.setEndereco(scanner.nextLine());
-
-		System.out.print("\n > Informe o bairro: ");
-		usuario.setBairro(scanner.nextLine());
-
-		System.out.print("\n > Informe a cidade: ");
-		usuario.setCidade(scanner.nextLine());
-
-		System.out.print("\n > Informe o estado: ");
-		usuario.setUf(scanner.nextLine());
-
-		System.out.print("\n > Informe o CEP: ");
-		usuario.setCep(scanner.nextLine());
-
-		System.out.print("\n > Informe o telefone: ");
-		usuario.setTelefone(scanner.nextLine());
-
-		System.out.print("\n > Informe a foto: ");
-		usuario.setFoto(scanner.nextLine());
-
-		System.out.print("\n > Informe o status do usuário: ");
-		usuario.setAtivo(scanner.nextLine());
-
-		int saveStatus = usuario.save();
+		user.setIdUsuario(0);
+		user.setSenha("12345");
+		user.setFoto("");
+		user.setAtivo("S");
+		int saveStatus = user.save();
 		
 		if(saveStatus != 0) {
 			
@@ -125,18 +88,16 @@ public class UsuarioService {
 					rs.getString("uf")
 				);
 				usuarioSimples.setTelefone(rs.getString("telefone"));
-				usuarioSimples.setAtivo(rs.getString("ativo"));
+				usuarioSimples.setAtivo( (rs.getString("ativo").equals("N"))? "Inativo" : "Ativo");
 				usersList.add(usuarioSimples);
 				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		for(Usuario u : usersList) {
-			System.out.println("\n > " + u.getIdUsuario() + " - " + u.getNome() + "\n");
-		}
 		return usersList;
 	}
+	
 	public Usuario buscarPorId(int id) {
 		System.out.println("\n > Pesquisando usuário pelo código " + id + ":");
 		
