@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import classes.models.Usuario;
 import classes.services.UsuarioService;
 import classes.utils.AuthenticatedUser;
+import classes.views.Painel;
 
 public class ListUsers {
 	private JFrame frame;
@@ -70,9 +71,9 @@ public class ListUsers {
 		nomeUsuarioLogado.setFont(accentFont);
 		nomeUsuarioLogado.setForeground(corTexto);
 		
-		JButton btnLogout = new JButton("Sair");
+		JButton btnLogout = new JButton("Voltar");
 		setButtonStyle(btnLogout);
-		addLogoutAction(btnLogout);
+		addVoltarAction(btnLogout);
 		
 		head.add(nomeUsuarioLogado, BorderLayout.WEST);
 		head.add(btnLogout, BorderLayout.EAST);
@@ -160,14 +161,13 @@ public class ListUsers {
 		return usersList;
 	}
 	
-	private void addLogoutAction(JButton button) {	
+	private void addVoltarAction(JButton button) {	
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				usuarioLogado = null;
 				frame.dispose();
-					
+				Painel painel = new Painel(usuarioLogado);	
 			}
 		});		
 	}

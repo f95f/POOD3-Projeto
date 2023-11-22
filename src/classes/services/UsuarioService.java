@@ -33,14 +33,11 @@ public class UsuarioService {
 				usuario.setFoto(rs.getString("foto"));
 				usuario.setAtivo(rs.getString("ativo"));
 				
-				System.out.println("\n\n >> " + usuario.getSenha() + "\n\n");
-				System.out.println(" >> " + senha + "\n\n");
 				if(usuario.getSenha().equals(senha)){
 					return usuario;
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -52,7 +49,6 @@ public class UsuarioService {
 		user.setIdUsuario(0);
 		user.setSenha("12345");
 		user.setFoto("");
-		user.setAtivo("S");
 		int saveStatus = user.save();
 		
 		if(saveStatus != 0) {
