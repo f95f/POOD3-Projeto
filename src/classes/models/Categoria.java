@@ -71,7 +71,10 @@ public class Categoria {
 			this.getDescricao()
 		};
 	}
-	
+	@Override
+	public String toString() {
+	    return this.getDescricao();
+	}
 	
 	// --- Construtores -------------------------
 	

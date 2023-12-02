@@ -2,6 +2,7 @@ package classes.services;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import classes.models.Categoria;
@@ -12,7 +13,6 @@ public class CategoriaService {
 	private Scanner scanner = new Scanner(System.in);
 	
 	public int criar() {
-		
 		String nomeCategoria = "";
 		
 		do {
@@ -45,23 +45,29 @@ public class CategoriaService {
 	
 	}
 	
-	public void listar() {
+	public ArrayList<Categoria> listar() {
 		System.out.println("\n > Listando Categorias: ");
 		System.out.println("\n Código | Descrição ");
 		
-		ResultSet rs = categoria.listAll();
+		ArrayList<Categoria> categoriasList = new ArrayList<Categoria>();
+		
+		ResultSet rs = this.categoria.listAll();
 		
 		try {
 			while(rs.next()) {
-				String linha = "";
+				Categoria categoria = new Categoria();
 				categoria.setIdCategoria(rs.getInt("IdCategoria"));
 				categoria.setDescricao(rs.getString("descricao"));
+				categoriasList.add(categoria);
 				
-				System.out.printf("\n %6d | %s", categoria.getIdCategoria(), categoria.getDescricao());
+				System.out.printf("\n>>> %6d | %s", categoriasList.get(0).getIdCategoria(), categoria.getDescricao());
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		return categoriasList;
 	}
 	
 	public Categoria buscar(int id) {
@@ -188,4 +194,5 @@ public class CategoriaService {
 		}
 		while(true);
 	}
+
 }

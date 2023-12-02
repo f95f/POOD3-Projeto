@@ -69,11 +69,12 @@ public class DBQuery {
 	}
 	
 	public int execute(String sql) { // insert, delete, update
+		System.out.print("\n\n" + sql + "\n\n");
 		try {
 			int rs = statement.executeUpdate(sql);
 			return (rs);
 		}catch (SQLException e) {
-			System.out.println("\nErro: Verifique o comando ou a dependencia de chave extrangeira!");
+			System.out.println("\n\nErro: Verifique o comando ou a dependencia de chave extrangeira!");
 		}
 		
 		return 0;
@@ -96,7 +97,7 @@ public class DBQuery {
 			System.out.print(sql);
 			return ( this.execute(sql));
 		}else{
-			System.out.print("O n�mero de valores informados n�o � equivalente aos campos da tabela!");
+			System.out.print("\n\nO n�mero de valores informados n�o � equivalente aos campos da tabela!");
 		}	
 		return 0;
 	}
@@ -112,7 +113,7 @@ public class DBQuery {
 			return(0);
 		}
 		sql += "\n WHERE "+ this.fieldKey +" = '"+ values[this.keyFieldIndex] +"'";
-		System.out.print( sql );
+		System.out.print( "\n\n" + sql );
 		return ( this.execute(sql) );
 	}
 	

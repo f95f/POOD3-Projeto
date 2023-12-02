@@ -1,4 +1,4 @@
-package classes.views.usuarios;
+package classes.views.produtos;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -22,21 +21,23 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
+import classes.models.Categoria;
+import classes.models.Produto;
 import classes.models.Usuario;
+import classes.services.CategoriaService;
+import classes.services.ProdutoService;
 import classes.services.UsuarioService;
 import classes.utils.AuthenticatedUser;
 import classes.views.Painel;
+import classes.views.usuarios.ListUsers;
 
-public class CreateUser {
-	
+public class CreateProduto {
+
 	private JFrame frame;
 	private JLabel nomeUsuarioLogado = new JLabel();
 	private Insets padding = new Insets(5, 10, 5, 10);
@@ -53,11 +54,11 @@ public class CreateUser {
 	Font contentFont = new Font("Arial", Font.PLAIN, 14);
 	
 	ArrayList<JTextField> textFields = new ArrayList<JTextField>();
-	ArrayList<JComboBox> selectFields = new ArrayList<JComboBox>();
+	JComboBox<Categoria> categoriasList = new JComboBox<>();
 	
-	public CreateUser(AuthenticatedUser usuario){
+	public CreateProduto(AuthenticatedUser usuario){
 		
-		this.nomeUsuarioLogado.setText("Cadastrar Usuários");
+		this.nomeUsuarioLogado.setText("Cadastrar Produtos");
 		this.usuarioLogado = usuario;
 		render();
 		
@@ -66,7 +67,7 @@ public class CreateUser {
 
 		frame = new JFrame();
 
-		this.frame.setTitle("Lojinha - Adicionar Usuários");
+		this.frame.setTitle("Lojinha - Adicionar Produtos");
 		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.frame.setSize(800, 600);
 		this.frame.setResizable(false);
@@ -96,11 +97,11 @@ public class CreateUser {
 		JPanel controlButtonsPannel = new JPanel(new FlowLayout());
 		JPanel statusPannel = new JPanel(new FlowLayout());
 		
-		JButton btnNovoUsuario = new JButton("Adicionar");
-		setButtonStyle(btnNovoUsuario, corEscura);
-		btnNovoUsuario.addActionListener(new ActionListener() {
+		JButton btnNovoProduto = new JButton("Adicionar");
+		setButtonStyle(btnNovoProduto, corEscura);
+		btnNovoProduto.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) { salvarUsuario(); }
+			public void actionPerformed(ActionEvent e) { salvarProduto(); }
 		});
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -109,6 +110,7 @@ public class CreateUser {
 			@Override
 			public void actionPerformed(ActionEvent e) { voltar(); }
 		});
+		
 		JPanel form = new JPanel(new GridLayout(0, 3));
 		form.setBorder(margem);
 		form.setBackground(corClara);
@@ -118,8 +120,9 @@ public class CreateUser {
 		statusMessage.setFont(contentFont);
 		statusMessage.setBorder(margem);
 		statusMessage.setForeground(corClara);
+		
 		controlButtonsPannel.setBorder(margem);
-		controlButtonsPannel.add(btnNovoUsuario);
+		controlButtonsPannel.add(btnNovoProduto);
 		controlButtonsPannel.add(btnCancelar);
 		controlButtonsPannel.setBackground(corMedia);
 		statusPannel.setBackground(corMedia);
@@ -147,51 +150,55 @@ public class CreateUser {
 		
 	}
 
-	private void salvarUsuario() {
+	private void salvarProduto() {
 		
-		Usuario usuario = new Usuario();
-		UsuarioService service = new UsuarioService();
+		Produto produto = new Produto();
+		ProdutoService service = new ProdutoService();
 		
-		usuario.setNome(textFields.get(0).getText());
-		usuario.setEmail(textFields.get(1).getText());
-		usuario.setTelefone(textFields.get(2).getText());
-		usuario.setCpf(textFields.get(3).getText());
-		usuario.setEndereco(textFields.get(4).getText());
-		usuario.setBairro(textFields.get(5).getText());
-		usuario.setCidade(textFields.get(6).getText());
-		usuario.setUf(selectFields.get(0).getSelectedItem().toString());
-		usuario.setCep(textFields.get(7).getText());
-		usuario.setIdNivelUsuario(selectFields.get(1).getSelectedIndex() + 1);
-		usuario.setAtivo((selectFields.get(2).getSelectedItem().equals("Ativa"))? "S" : "N");
+		produto.setNome(textFields.get(0).getText());
+		produto.setFabricante(textFields.get(1).getText());
+		produto.setMarca(textFields.get(2).getText());
+		produto.setModelo(textFields.get(3).getText());
 		
-		this.statusMessage.setText("Usuário adicionado por sucesso.");
+		Categoria selectedCategoria = (Categoria) categoriasList.getSelectedItem();
+		produto.setIdCategoria(selectedCategoria.getIdCategoria());
+		produto.setDescricao(textFields.get(4).getText());
+		produto.setUnidadeMedida(textFields.get(5).getText());
+		produto.setLargura(Double.parseDouble(textFields.get(6).getText()));
+		produto.setAltura(Double.parseDouble(textFields.get(7).getText()));
+		produto.setProfundidade(Double.parseDouble(textFields.get(8).getText()));
+		produto.setPeso(Double.parseDouble(textFields.get(9).getText()));
+		produto.setCor(textFields.get(10).getText());
 		
-		service.criar(usuario);
+		this.statusMessage.setText("Produto adicionado por sucesso.");
+		
+		service.criar(produto);
 	}
 	
 	private void placeForm(JPanel body) {
+		CategoriaService service = new CategoriaService();
 		
-		String[] estados = {"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
-		String[] niveis = {"Cliente", "Funcionário", "Caixa", "Financeiro", "Gerente", "Diretor", "Administrador"};
-		
-		selectFields.add(new JComboBox(estados)); 
-		selectFields.add(new JComboBox(niveis)); 
-		selectFields.add(new JComboBox(new String[]{ "Ativa", "Inativa" })); 
+		ArrayList<Categoria> categorias = service.listar();
+
+		for (Categoria item : categorias) { 
+			categoriasList.addItem(new Categoria(item.getIdCategoria(), item.getDescricao())); 
+		}
 		
 		ArrayList<JPanel> inputContainers = new ArrayList<JPanel>();
-		String[] labelValues = {"Nome:", "Email:", "Telefone:", "CPF:", "Endereço:", "Bairro:", "Cidade:", "Estado:", "CEP:", "Nível:", "Estado da Conta"};
+		String[] labelValues = {"Nome:", "Fabricante:", "Marca:", "Modelo:", "Categoria:", "Descrição:", "Medida:", "Largura:", "Altura:", "Profundidade:", "Peso:", "Cor:"};
 		String[] toolTipValues = {
 			"Informe o nome",
-			"Informe o email",
-			"Informe o telefone",
-			"Informe o CPF",
-			"Informe a rua e o número",
-			"Informe o bairro",
-			"Informe a cidade",
-			"Selecione o estado",
-			"Informe o CEP",
-			"Selecione um Nível de acesso",
-			"Selecione o estado da conta"
+			"Informe o fabricante",
+			"Informe a marca",
+			"Informe o modelo",
+			"Selecione a categoria",
+			"Descreva o produto",
+			"Unidade de medida do produto",
+			"Informe a altura",
+			"Informe a largura",
+			"Informe a profundidade",
+			"Informe o peso",
+			"Informe a cor"
 		};
 
 		for(int i = 0; i < labelValues.length; i++) {
@@ -200,17 +207,9 @@ public class CreateUser {
 			label.setFont(contentFont);
 			JTextField textField = new JTextField(30);
 
-			if(i == 7) {
-				selectFields.get(0).setToolTipText(toolTipValues[i]);
-				selectFields.get(0).setBorder(new LineBorder(corEscura, 1));
-			}
-			else if(i == 9) {
-				selectFields.get(1).setToolTipText(toolTipValues[i]);
-				selectFields.get(1).setBorder(new LineBorder(corEscura, 1));
-			}
-			else if(i == 10) {
-				selectFields.get(2).setToolTipText(toolTipValues[i]);
-				selectFields.get(2).setBorder(new LineBorder(corEscura, 1));
+			if(i == 4) {
+				categoriasList.setToolTipText(toolTipValues[i]);
+				categoriasList.setBorder(new LineBorder(corEscura, 1));
 			}
 			else {
 				textField.setToolTipText(toolTipValues[i]);
@@ -230,18 +229,14 @@ public class CreateUser {
 			
 			JPanel container = new JPanel(new BorderLayout());		
 			container.add(label, BorderLayout.NORTH);
-			if( i == 7 ) {
-				container.add(selectFields.get(0), BorderLayout.SOUTH);
-			}
-			else if( i == 9 ) {
-				container.add(selectFields.get(1), BorderLayout.SOUTH);
-			}
-			else if( i == 10 ) {
-				container.add(selectFields.get(2), BorderLayout.SOUTH);
+			if( i == 4 ) {
+				container.add(categoriasList, BorderLayout.SOUTH);
 			}
 			else {
 				container.add(textField, BorderLayout.SOUTH);				
 			}
+			
+			//container.add(textField, BorderLayout.SOUTH);				
 			container.setPreferredSize(formSize);
 			container.setBorder(margem);
 			container.setBackground(corClara);
@@ -252,7 +247,7 @@ public class CreateUser {
 	
 	private void voltar() {	
 		frame.dispose();
-		Painel painel = new Painel(usuarioLogado);
+		Painel painel = new Painel(usuarioLogado);	
 	}
 	
 	private void setButtonStyle(JButton button, Color cor) {

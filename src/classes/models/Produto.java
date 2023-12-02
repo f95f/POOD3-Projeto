@@ -69,12 +69,16 @@ public class Produto {
 		
 	}
 	
-	public int delete(){	
+	public int delete(int id){	
 		
-		if(this.getIdProduto() > 0) {
-			return this.dbQuery.delete(this.toArray());
-		}
-		return 0;
+		return this.dbQuery.execute("delete from lojinha.produtos where idProduto = " + id + ";");
+
+	}
+	
+	public int editar(String valor, String campo, int id) {
+		return this.dbQuery.execute(
+			"update lojinha.produtos set " + campo + " = '" + valor + "' where idProduto = " + id + ";"
+		);
 	}
 	
 	// --- toArray -------------------------

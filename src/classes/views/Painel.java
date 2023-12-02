@@ -27,6 +27,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import classes.utils.AuthenticatedUser;
+import classes.views.produtos.CreateProduto;
+import classes.views.produtos.ListProdutos;
+import classes.views.usuarios.CreateUser;
 import classes.views.usuarios.ListUsers;
 
 public class Painel {
@@ -142,7 +145,7 @@ public class Painel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				CreateProduto criarProdutos = new CreateProduto(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -154,7 +157,7 @@ public class Painel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				ListProdutos listProdutos = new ListProdutos(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -190,7 +193,7 @@ public class Painel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ListUsers newUserButton = new ListUsers(usuarioLogado);
+				CreateUser newUser = new CreateUser(usuarioLogado);
 				frame.dispose();
 				
 			}
