@@ -46,8 +46,6 @@ public class CategoriaService {
 	}
 	
 	public ArrayList<Categoria> listar() {
-		System.out.println("\n > Listando Categorias: ");
-		System.out.println("\n Código | Descrição ");
 		
 		ArrayList<Categoria> categoriasList = new ArrayList<Categoria>();
 		
@@ -60,8 +58,6 @@ public class CategoriaService {
 				categoria.setDescricao(rs.getString("descricao"));
 				categoriasList.add(categoria);
 				
-				System.out.printf("\n>>> %6d | %s", categoriasList.get(0).getIdCategoria(), categoria.getDescricao());
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
