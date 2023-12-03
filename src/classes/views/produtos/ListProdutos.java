@@ -36,7 +36,6 @@ import javax.swing.table.TableColumn;
 
 import classes.models.Categoria;
 import classes.models.Produto;
-import classes.services.CategoriaService;
 import classes.services.ProdutoService;
 import classes.utils.AuthenticatedUser;
 import classes.utils.ProdutoDTO;
@@ -64,7 +63,7 @@ public class ListProdutos {
 	private Font contentFont = new Font("Arial", Font.PLAIN, 14);
 	
 	private ProdutoService service = new ProdutoService();
-	private CategoriaService categoriaService = new CategoriaService();
+	private Categoria categoriaService = new Categoria();
 	//ArrayList<ProdutoDTO> dataSource;
 	
 	public ListProdutos(AuthenticatedUser Produto){
@@ -105,6 +104,10 @@ public class ListProdutos {
 		JButton btnNovoProduto = new JButton("Novo");
 		JButton btnEditarProduto = new JButton("Editar");
 		JButton btnExcluirProduto = new JButton("Excluir");
+		
+		setButtonStyle(btnNovoProduto);
+		setButtonStyle(btnEditarProduto);
+		setButtonStyle(btnExcluirProduto);
 		
 		addCreateProductAction(btnNovoProduto);
 		addExcluirProdutoAction(btnExcluirProduto);
@@ -312,11 +315,12 @@ public class ListProdutos {
 						int status = service.excluir(id);
 						
 						if(status == 1) {
+							renderTable(getProductsList());
 							JOptionPane.showMessageDialog(
 								null,
 								"Produto Excluído.",
 								"Confirmar Exclusão", 
-								JOptionPane.OK_OPTION
+								JOptionPane.INFORMATION_MESSAGE 
 							);
 						}
 						else {
@@ -343,7 +347,7 @@ public class ListProdutos {
 	
 	private void addEditarProdutoAction(JButton button){
 		
-		String[] fields = {"idProduto", "fabricante", "nome", "marca", "modelo", "categoria", "descricao", "unidadeMedida", "dimensoes", "peso", "cor"};
+		String[] fields = {"idProduto", "nome", "fabricante", "marca", "modelo", "categoria", "descricao", "unidadeMedida", "dimensoes", "peso", "cor"};
 		
 		button.addActionListener(new ActionListener() {
 			
@@ -467,7 +471,7 @@ public class ListProdutos {
 		        JPanel panel = new JPanel(new GridLayout(0, 1));
 		        panel.setBorder(margem);
 		        
-				ArrayList<Categoria> categorias = categoriaService.listar();
+				ArrayList<Categoria> categorias = categoriaService.listAll();
 				JComboBox<Categoria> categoriasList = new JComboBox<>();
 				for (Categoria item : categorias) { 
 					categoriasList.addItem(new Categoria(item.getIdCategoria(), item.getDescricao())); 
@@ -492,15 +496,14 @@ public class ListProdutos {
 				for(int i = 0; i < valorAtualizado.length; i++) {
 					status += service.atualizar(valorAtualizado[i], campoSelecionado[i], id);    					
 				}
-				System.out.println("\n\n " + (status != valorAtualizado.length));
-				System.out.println("\n\n " + (valorAtualizado.length));
-				System.out.println("\n\n " + status);
+				
 				if(status == valorAtualizado.length) { 
+					renderTable(getProductsList());
 					JOptionPane.showMessageDialog(
 						null,
 						"Produto Atualizado.",
 						"Atualizar Item", 
-						JOptionPane.OK_OPTION
+						JOptionPane.INFORMATION_MESSAGE 
 					);
 				}
 				else {
@@ -550,7 +553,7 @@ public class ListProdutos {
 	
 	private JComboBox<Categoria> listCategorias(){
 		
-		ArrayList<Categoria> categorias = categoriaService.listar();
+		ArrayList<Categoria> categorias = categoriaService.listAll();
 		JComboBox<Categoria> categoriasList = new JComboBox<>();
 		categoriasList.addItem(new Categoria(0, "Todas"));
 		for (Categoria item : categorias) { 

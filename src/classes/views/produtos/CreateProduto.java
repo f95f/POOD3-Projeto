@@ -29,7 +29,7 @@ import javax.swing.border.LineBorder;
 import classes.models.Categoria;
 import classes.models.Produto;
 import classes.models.Usuario;
-import classes.services.CategoriaService;
+
 import classes.services.ProdutoService;
 import classes.services.UsuarioService;
 import classes.utils.AuthenticatedUser;
@@ -55,6 +55,7 @@ public class CreateProduto {
 	
 	ArrayList<JTextField> textFields = new ArrayList<JTextField>();
 	JComboBox<Categoria> categoriasList = new JComboBox<>();
+	Categoria categoriaService = new Categoria();
 	
 	public CreateProduto(AuthenticatedUser usuario){
 		
@@ -176,9 +177,8 @@ public class CreateProduto {
 	}
 	
 	private void placeForm(JPanel body) {
-		CategoriaService service = new CategoriaService();
 		
-		ArrayList<Categoria> categorias = service.listar();
+		ArrayList<Categoria> categorias = categoriaService.listAll();
 
 		for (Categoria item : categorias) { 
 			categoriasList.addItem(new Categoria(item.getIdCategoria(), item.getDescricao())); 

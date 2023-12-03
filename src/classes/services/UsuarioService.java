@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import classes.models.Usuario;
+import classes.utils.ProdutoDTO;
+import classes.utils.UserDTO;
 
 public class UsuarioService {
 
@@ -63,30 +65,33 @@ public class UsuarioService {
 		}
 	}
 
-	public ArrayList<Usuario> listar() {
+	public ArrayList<UserDTO> listar() {
 		
-		ArrayList<Usuario> usersList = new ArrayList<Usuario>();
+		ArrayList<UserDTO> usersList = new ArrayList<UserDTO>();
 		ResultSet rs = usuario.listAll();
 		
 		try {
 			while(rs.next()) {
+				UserDTO usuarioDTO = new UserDTO();
 				
-				Usuario usuarioSimples = new Usuario();
-				
-				usuarioSimples.setIdUsuario(rs.getInt("idUsuario"));
-				usuarioSimples.setEmail(rs.getString("email"));
-				usuarioSimples.setIdNivelUsuario(rs.getInt("idNivelUsuario"));
-				usuarioSimples.setNome(rs.getString("nome"));
-				usuarioSimples.setEndereco(
-					rs.getString("endereco") + ", " +
-					rs.getString("bairro") + " - " + 
-					rs.getString("cidade") + ", " + 
+				usuarioDTO.setIdUsuario(rs.getInt("idUsuario"));
+				usuarioDTO.setEmail(rs.getString("email"));
+				usuarioDTO.setSenha(rs.getString("senha"));
+				usuarioDTO.setNivelUsuario(rs.getInt("idNivelUsuario"));
+				usuarioDTO.setNome(rs.getString("nome"));
+				usuarioDTO.setCpf(rs.getString("cpf"));
+				usuarioDTO.setEndereco(
+					rs.getString("endereco"),
+					rs.getString("bairro"),
+					rs.getString("cidade"),
 					rs.getString("uf")
 				);
-				usuarioSimples.setTelefone(rs.getString("telefone"));
-				usuarioSimples.setAtivo( (rs.getString("ativo").equals("N"))? "Inativo" : "Ativo");
-				usersList.add(usuarioSimples);
+				usuarioDTO.setCep(rs.getString("cep"));
+				usuarioDTO.setTelefone(rs.getString("telefone"));
+				String status = "";
+				usuarioDTO.setAtivo((rs.getString("ativo").equals("N"))? "Não" : "Sim");
 				
+				usersList.add(usuarioDTO);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -95,7 +100,6 @@ public class UsuarioService {
 	}
 	
 	public Usuario buscarPorId(int id) {
-		System.out.println("\n > Pesquisando usuário pelo código " + id + ":");
 		
 		ResultSet rs = usuario.listById(id + "");
 		
@@ -117,28 +121,6 @@ public class UsuarioService {
 				usuario.setFoto(rs.getString("foto"));
 				usuario.setAtivo(rs.getString("ativo"));
 				
-//				A linha abaixo formata cada linha da tabela para que estas mantenham o mesmo tamanho. 
-				System.out.printf("\n %6d | %-30s | %-30s | %-6d | %-30s |"
-								+ " %-14s | %-30s | %-30s | %-30s | %-15s|"
-								+ " %-10s | %-15s | %-30s | %-30s ",
-						usuario.getIdUsuario(),
-						usuario.getEmail(),
-						usuario.getSenha(),
-						usuario.getIdNivelUsuario(),
-						usuario.getNome(),
-						
-						usuario.getCpf(),
-						usuario.getEndereco(),
-						usuario.getBairro(),
-						usuario.getCidade(),
-						usuario.getUf(),
-						
-						usuario.getCep(),
-						usuario.getTelefone(),
-						usuario.getFoto(),
-						usuario.getAtivo()
-				);
-				
 				return usuario;
 			}
 			else {
@@ -149,37 +131,46 @@ public class UsuarioService {
 		}
 		return null;
 	}
-	
-	public void apagar(int id) {
-		
-		System.out.println("\n > Apagando usuário");
-		usuario = this.buscarPorId(id);
-			
-		if(usuario == null) { return; }
-		
-		String resposta = "";
-		do {
-			System.out.println("\n\n > Confirmar exclusão? [sim/não]: ");
-			resposta = scanner.next().toLowerCase();
-			if(resposta.equals("sim") || resposta.equals("s")) {
-				
-				int deleteStatus = usuario.delete();
-				
-				if(deleteStatus == 1) {
-					System.out.println("\n [i] Pedido apagado!");
-				}
-				else {
-					System.out.println("\n [!] Erro ao apagar!\n");	
-				}
-				break;
-			}
-			if(resposta.equals("não") || resposta.equals("n") || resposta.equals("nao")) {
-				System.out.println("\n [i] Nenhum usuário apagado.\n");
-				break;
-			}
-		}
-		while(true);
+
+	public int excluir(int id) {
+		return this.usuario.delete(id);
+	}
+
+	public int atualizar(String valorAtualizado, String campo, int id) {
+		return this.usuario.editar(valorAtualizado, campo, id);
 	}
 	
-	
+	public ArrayList<UserDTO> searchBy(String field, String searchTerm) {
+		
+		ArrayList<UserDTO> usuariosList = new ArrayList<UserDTO>();
+		searchTerm.toLowerCase();
+		ResultSet rs = usuario.listByName(searchTerm);
+		try {
+			while(rs.next()) {
+				
+				UserDTO usuarioDTO = new UserDTO();
+						
+				usuarioDTO.setIdUsuario(rs.getInt("idUsuario"));
+				usuarioDTO.setEmail(rs.getString("email"));
+				usuarioDTO.setSenha(rs.getString("senha"));
+				usuarioDTO.setNivelUsuario(rs.getInt("idNivelUsuario"));
+				usuarioDTO.setNome(rs.getString("nome"));
+				usuarioDTO.setCpf(rs.getString("cpf"));
+				usuarioDTO.setEndereco(
+					rs.getString("endereco"),
+					rs.getString("bairro"),
+					rs.getString("cidade"),
+					rs.getString("uf")
+				);
+				usuarioDTO.setCep(rs.getString("cep"));
+				usuarioDTO.setTelefone(rs.getString("telefone"));
+				usuarioDTO.setAtivo(rs.getString("ativo"));
+				
+				usuariosList.add(usuarioDTO);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuariosList;
+	}
 }

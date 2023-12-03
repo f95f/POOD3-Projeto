@@ -70,15 +70,16 @@ public class Usuario {
 		
 	}
 	
-	public int delete() {
+	public int delete(int id){	
 		
-		if(this.getIdUsuario() > 0) {
-			return this.dbQuery.delete(this.toArray());
-		}
-		return 0;
-		
+		return this.dbQuery.execute("delete from lojinha.usuarios where idUsuario = " + id + ";");
+
 	}
-	
+	public int editar(String valor, String campo, int id) {
+		return this.dbQuery.execute(
+			"update lojinha.usuarios set " + campo + " = '" + valor + "' where idUsuario = " + id + ";"
+		);
+	}
 	
 	// --- toArray -------------------------
 	
@@ -242,4 +243,5 @@ public class Usuario {
 	public void setAtivo(String ativo) {
 		this.ativo = ativo;
 	}
+
 }

@@ -1,6 +1,8 @@
 package classes.models;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import classes.database.DBQuery;
 
@@ -17,27 +19,29 @@ public class Categoria {
 	
 	private DBQuery dbQuery = new DBQuery(tableName, fieldsName, fieldKey);
 	
-	
 	// --- Operações no BD -------------------------
 	
-	public ResultSet listAll() {
-		
-		return this.dbQuery.select("");
-		
+	public ResultSet listById(String id) {	
+		return this.dbQuery.select(("idCategoria = " + id));	
 	}
 	
-	public ResultSet listById(String id) {
-		
-		return this.dbQuery.select(("idCategoria = " + id));
-		
-	}
-	
-	public ResultSet listByName(String name) {
-		
-		// A função LOWER() do MySql é utilizada aqui para incluir 
-		// na busca ambos termos com letras maiúsculas e minúsculas.
-		return this.dbQuery.select(("LOWER(descricao) like LOWER('%" + name + "%')"));
-		
+	public ArrayList<Categoria> listAll() {	
+		ArrayList<Categoria> categoriasList = new ArrayList<Categoria>();
+		ResultSet rs = this.dbQuery.select("");
+		try {
+			while(rs.next()) {
+				
+				Categoria categoria = new Categoria();
+						
+				categoria.setIdCategoria(rs.getInt("idCategoria"));
+				categoria.setDescricao(rs.getString("descricao"));
+				
+				categoriasList.add(categoria);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categoriasList;	
 	}
 	
 	public int save() {
@@ -51,15 +55,38 @@ public class Categoria {
 		
 	}
 	
-	public int delete() {
+	public int delete(int id){	
 		
-		if(this.getIdCategoria() > 0) {
-			return this.dbQuery.delete(this.toArray());
-		}
-		return 0;
-		
+		return this.dbQuery.execute("delete from lojinha.categorias where idCategoria = " + id + ";");
+
 	}
 	
+	public int editar(String valor, String campo, int id) {
+		return this.dbQuery.execute(
+			"update lojinha.categorias set " + campo + " = '" + valor + "' where idCategoria = " + id + ";"
+		);
+	}
+	
+	public ArrayList<Categoria> searchBy(String searchTerm) {
+		
+		ArrayList<Categoria> categoriasList = new ArrayList<Categoria>();
+		searchTerm.toLowerCase();
+		ResultSet rs = this.dbQuery.select(("LOWER(descricao) like LOWER('%" + searchTerm + "%')"));
+		try {
+			while(rs.next()) {
+				
+				Categoria categoria = new Categoria();
+						
+				categoria.setIdCategoria(rs.getInt("idCategoria"));
+				categoria.setDescricao(rs.getString("descricao"));
+				
+				categoriasList.add(categoria);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categoriasList;
+	}
 	
 	// --- toArray -------------------------
 	
@@ -103,10 +130,7 @@ public class Categoria {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	};
-	
-	
-	
+	}
 	
 }
 

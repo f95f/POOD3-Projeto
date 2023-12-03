@@ -1,5 +1,4 @@
 import classes.seeders.Seeder;
-import classes.services.CategoriaService;
 import classes.services.InstitucionalService;
 import classes.services.ProdutoService;
 import classes.utils.AuthenticatedUser;

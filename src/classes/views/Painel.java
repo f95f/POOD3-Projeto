@@ -180,8 +180,7 @@ public class Painel {
 		categoriasButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				ListCategorias listCategorias = new ListCategorias(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -193,7 +192,7 @@ public class Painel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				CreateUser newUser = new CreateUser(usuarioLogado);
+				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
 				frame.dispose();
 				
 			}
