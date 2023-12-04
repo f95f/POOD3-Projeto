@@ -3,6 +3,7 @@ package classes.utils;
 public class AuthenticatedUser {
 
 	private Integer userLoginId;
+	private int idUsuario;
 	private String userName;
 	private Integer idNivelUsuario;
 	private String token;
@@ -30,10 +31,18 @@ public class AuthenticatedUser {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	public AuthenticatedUser(Integer userLogin, String userName, Integer idNivelUsuario, String token) {
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	public AuthenticatedUser(Integer userLoginId, int idUsuario, String userName, Integer idNivelUsuario,
+			String token) {
 		super();
-		this.userLoginId = userLogin;
+		this.userLoginId = userLoginId;
+		this.idUsuario = idUsuario;
 		this.userName = userName;
 		this.idNivelUsuario = idNivelUsuario;
 		this.token = token;

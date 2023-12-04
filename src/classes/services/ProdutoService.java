@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 import classes.models.Categoria;
 import classes.models.Produto;
+import classes.models.Usuario;
 import classes.utils.ProdutoDTO;
-import classes.views.produtos.Produtos;
+import classes.utils.UserDTO;
 
 public class ProdutoService {
 
@@ -162,5 +163,39 @@ public class ProdutoService {
 		
 		return produtosList;
 	}
+	
+	public ProdutoDTO buscarPorId(int id) {
+		
+		ResultSet rs = produto.listById(id + "");
+		
+		try {
+			if(rs.next()) {
+				
+				ProdutoDTO produtoDTO = new ProdutoDTO();
+				produtoDTO.setIdProduto(rs.getInt("idproduto"));
+				produtoDTO.setFabricante(rs.getString("fabricante"));
+				produtoDTO.setNome(rs.getString("nome"));
+				produtoDTO.setMarca(rs.getString("marca"));
+				produtoDTO.setModelo(rs.getString("modelo"));
+				produtoDTO.setCategoria(
+						getCategoria(rs.getInt("idCategoria")));
+				
+				produtoDTO.setDescricao(rs.getString("descricao"));
+				produtoDTO.setUnidadeMedida(rs.getString("unidadeMedida"));
+				produtoDTO.setDimensoes(
+						rs.getDouble("largura") + " x " + rs.getDouble("altura") + " x " + rs.getDouble("profundidade"));
 
+				produtoDTO.setPeso(rs.getDouble("peso") + " Kg");
+				produtoDTO.setCor(rs.getString("cor"));
+					
+				return produtoDTO;
+			}
+			else {
+				System.out.println("\n [!] Código não encontrado!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	} 
 }

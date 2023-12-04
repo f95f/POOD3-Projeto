@@ -100,4 +100,8 @@ public class UserDTO {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 }

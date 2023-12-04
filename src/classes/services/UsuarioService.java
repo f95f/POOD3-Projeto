@@ -141,10 +141,10 @@ public class UsuarioService {
 	}
 	
 	public ArrayList<UserDTO> searchBy(String field, String searchTerm) {
-		
+
 		ArrayList<UserDTO> usuariosList = new ArrayList<UserDTO>();
 		searchTerm.toLowerCase();
-		ResultSet rs = usuario.listByName(searchTerm);
+		ResultSet rs = usuario.listByFields(field, searchTerm);
 		try {
 			while(rs.next()) {
 				
@@ -165,12 +165,17 @@ public class UsuarioService {
 				usuarioDTO.setCep(rs.getString("cep"));
 				usuarioDTO.setTelefone(rs.getString("telefone"));
 				usuarioDTO.setAtivo(rs.getString("ativo"));
-				
+				System.out.println("\n\n - " + usuarioDTO.getNome());
 				usuariosList.add(usuarioDTO);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return usuariosList;
+	}
+
+	public ArrayList<UserDTO> getClientes() {
+		
+		return this.searchBy("idNivelUsuario", 1 + "");
 	}
 }

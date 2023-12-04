@@ -54,8 +54,8 @@ public class Usuario {
 	}
 	
 	public ResultSet listByFields(String campo, String name) {
-		
-		return this.dbQuery.select(( campo + " = '" + name + "' "));
+
+		return this.dbQuery.select(("LOWER(" + campo + ") like LOWER('%" + name + "%')"));
 		
 	}
 	

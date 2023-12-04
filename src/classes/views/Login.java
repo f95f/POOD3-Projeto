@@ -189,7 +189,7 @@ public class Login{
 		}
 		else {
 			errorMessage.setText("Usuário " + usuario.getNome() + " autenticado com sucesso.");
-			
+			usuarioLogado.setIdUsuario(usuario.getIdUsuario());
 			usuarioLogado.setUserName(usuario.getNome());
 			usuarioLogado.setUserLogin(usuario.getIdUsuario());
 			usuarioLogado.setIdNivelUsuario(usuario.getIdNivelUsuario());

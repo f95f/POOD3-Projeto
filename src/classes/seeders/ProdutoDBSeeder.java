@@ -84,7 +84,6 @@ public class ProdutoDBSeeder {
 		gravar("Canon", "Câmera DSLR", 1, "Canon", "EOS 5D Mark IV", "Câmera profissional com sensor Full Frame", "unidade", 15, 11, 4, 0.95, "preto");
 		gravar("Bose", "Fones de Ouvido", 1, "Bose", "QuietComfort 35 II", "Fones de ouvido com cancelamento de ruído", "unidade", 7, 7, 3, 0.24, "prata");
 	
-		
 	}
 	
 	private static void gravar(String fabricante, String nome, int idCategoria, String marca, String modelo,

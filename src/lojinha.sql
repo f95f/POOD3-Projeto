@@ -65,6 +65,7 @@ DROP TABLE IF EXISTS `pedidos`;
 CREATE TABLE `pedidos` (
   `idPedido` int NOT NULL AUTO_INCREMENT,
   `idUsuario` int DEFAULT NULL,
+  `idProduto` int DEFAULT NULL,
   `dtPedido` datetime DEFAULT NULL,
   `dtPagamento` datetime DEFAULT NULL,
   `dtNotaFiscal` datetime DEFAULT NULL,
@@ -154,5 +155,6 @@ INSERT INTO `usuarios` 	   	VALUES
 (2,'admins@localhost','admn',1,'Administrador','11111111111','',NULL,NULL,NULL,NULL,NULL,NULL,'N'),
 (3,'cleber@localhost','12346',1,'Cleber','12345678912','','','','','','','','N'),
 (4,'abc@localhost','12346',1,'abc','1234678901','Rua A','B','C','DE','01234987','115555-5555','','N');
+
 
 

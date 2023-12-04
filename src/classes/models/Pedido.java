@@ -8,6 +8,7 @@ public class Pedido {
 
 	private int idPedido;
 	private int idUsuario;
+	private int idProduto;
 	private String dtPedido;
 	private String dtPagamento;
 	private String dtNotaFiscal;
@@ -18,7 +19,6 @@ public class Pedido {
 	private String rastreioFrete;
 	private String entregaendereco;
 	private String entregaNumero;
-	private String entregaCompl;
 	private String entregaBairro;
 	private String entregaCidade;
 	private String entregaUF;
@@ -27,17 +27,14 @@ public class Pedido {
 	private String entregaRefer;
 	private String valorTotal;
 	private int qtdItems;
-	private String dtDevolucao;
-	private String motivoDevolucao;
 	
 	// --- Conexão com o BD ---------------------
 	
 	String tableName = "lojinha.pedidos";
-	String fieldsName = "idPedido,idUsuario,dtPedido,dtPagamento,dtNotaFiscal,notaFiscal,dtEnvio,dtRecebimento,tipoFrete,rastreioFrete,entregaendereco,entregaNumero,entregaCompl,entregaBairro,entregaCidade,entregaUF,entregaCEP,entregaTelefone,entregaRefer,valorTotal,qtdItems,dtDevolucao,motivoDevolucao";
+	String fieldsName = "idPedido,idUsuario,idProduto,dtPedido,dtPagamento,dtNotaFiscal,notaFiscal,dtEnvio,dtRecebimento,tipoFrete,rastreioFrete,entregaendereco,entregaNumero,entregaBairro,entregaCidade,entregaUF,entregaCEP,entregaTelefone,entregaRefer,valorTotal,qtdItems";
 	String fieldKey = "idPedido";
 	
 	private DBQuery dbQuery = new DBQuery(tableName, fieldsName, fieldKey);
-	
 	
 	// --- Operações no BD -------------------------
 	
@@ -47,10 +44,8 @@ public class Pedido {
 		
 	}
 	
-	public ResultSet listById(String coluna, String id) {
-		
-		return this.dbQuery.select((coluna + " = " + id));
-		
+	public ResultSet listBy(String coluna, String name) {	
+		return this.dbQuery.select("LOWER(" + coluna + ") like LOWER('%" + name + "%')");
 	}
 	
 	public int save() {
@@ -64,25 +59,20 @@ public class Pedido {
 		
 	}
 	
-	public int delete(){	
+	public int delete(int id){	
 		
-		if(this.getIdPedido() > 0) {
-			return this.dbQuery.delete(this.toArray());
-		}
-		return 0;
-	}
+		return this.dbQuery.execute("delete from lojinha.pedidos where idPedido = " + id + ";");
 
+	}
+	
+	public int editar(String valor, String campo, int id) {
+		return this.dbQuery.execute(
+			"update lojinha.pedidos set " + campo + " = '" + valor + "' where idPedido = " + id + ";"
+		);
+	}
 	public ResultSet listById(String id) {
 		
 		return this.dbQuery.select(("idUsuario = " + id));
-		
-	}
-	
-	public ResultSet listByName(String name) {
-		
-		// A função LOWER() do MySql é utilizada aqui para incluir 
-		// na busca ambos termos com letras maiúsculas e minúsculas.
-		return this.dbQuery.select(("LOWER(nome) like LOWER('%" + name + "%')"));
 		
 	}
 	
@@ -94,6 +84,7 @@ public class Pedido {
 				
 			this.getIdPedido() + "",
 			this.getIdUsuario() + "",
+			this.getIdProduto() + "",
 			this.getDtPedido(),
 			this.getDtPagamento(),
 			this.getDtNotaFiscal(),
@@ -104,7 +95,6 @@ public class Pedido {
 			this.getRastreioFrete(),
 			this.getEntregaendereco(),
 			this.getEntregaNumero(),
-			this.getEntregaCompl(),
 			this.getEntregaBairro(),
 			this.getEntregaCidade(),
 			this.getEntregaUF(),
@@ -112,9 +102,7 @@ public class Pedido {
 			this.getEntregaTelefone(),
 			this.getEntregaRefer(),
 			this.getValorTotal(),
-			this.getQtdItems() + "",
-			this.getDtDevolucao(),
-			this.getMotivoDevolucao()		
+			this.getQtdItems() + ""
 			
 		};
 	}
@@ -122,14 +110,15 @@ public class Pedido {
 	
 	public Pedido() {}
 
-	public Pedido(int idPedido, int idUsuario, String dtPedido, String dtPagamento, String dtNotaFiscal,
+	public Pedido(int idPedido, int idUsuario, int idProduto, String dtPedido, String dtPagamento, String dtNotaFiscal,
 			String notaFiscal, String dtEnvio, String dtRecebimento, int tipoFrete, String rastreioFrete,
-			String entregaendereco, String entregaNumero, String entregaCompl, String entregaBairro,
+			String entregaendereco, String entregaNumero, String entregaBairro,
 			String entregaCidade, String entregaUF, String entregaCEP, String entregaTelefone, String entregaRefer,
-			String valorTotal, int qtdItems, String dtDevolucao, String motivoDevolucao) {
+			String valorTotal, int qtdItems) {
 		super();
 		this.idPedido = idPedido;
 		this.idUsuario = idUsuario;
+		this.idProduto = idProduto;
 		this.dtPedido = dtPedido;
 		this.dtPagamento = dtPagamento;
 		this.dtNotaFiscal = dtNotaFiscal;
@@ -140,7 +129,6 @@ public class Pedido {
 		this.rastreioFrete = rastreioFrete;
 		this.entregaendereco = entregaendereco;
 		this.entregaNumero = entregaNumero;
-		this.entregaCompl = entregaCompl;
 		this.entregaBairro = entregaBairro;
 		this.entregaCidade = entregaCidade;
 		this.entregaUF = entregaUF;
@@ -149,13 +137,19 @@ public class Pedido {
 		this.entregaRefer = entregaRefer;
 		this.valorTotal = valorTotal;
 		this.qtdItems = qtdItems;
-		this.dtDevolucao = dtDevolucao;
-		this.motivoDevolucao = motivoDevolucao;
 	}
 
 	
 	// --- Getters e Setters -------------------------
 	
+	public int getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto(int idProduto) {
+		this.idProduto = idProduto;
+	}
+
 	public int getIdPedido() {
 		return idPedido;
 	}
@@ -252,14 +246,6 @@ public class Pedido {
 		this.entregaNumero = entregaNumero;
 	}
 
-	public String getEntregaCompl() {
-		return entregaCompl;
-	}
-
-	public void setEntregaCompl(String entregaCompl) {
-		this.entregaCompl = entregaCompl;
-	}
-
 	public String getEntregaBairro() {
 		return entregaBairro;
 	}
@@ -324,23 +310,4 @@ public class Pedido {
 		this.qtdItems = qtdItems;
 	}
 
-	public String getDtDevolucao() {
-		return dtDevolucao;
-	}
-
-	public void setDtDevolucao(String dtDevolucao) {
-		this.dtDevolucao = dtDevolucao;
-	}
-
-	public String getMotivoDevolucao() {
-		return motivoDevolucao;
-	}
-
-	public void setMotivoDevolucao(String motivoDevolucao) {
-		this.motivoDevolucao = motivoDevolucao;
-	}
-	
-
-	
-	
 }

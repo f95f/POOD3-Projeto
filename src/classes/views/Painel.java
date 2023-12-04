@@ -27,6 +27,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import classes.utils.AuthenticatedUser;
+import classes.views.pedidos.CriarPedido;
+import classes.views.pedidos.ListPedidos;
 import classes.views.produtos.CreateProduto;
 import classes.views.produtos.ListProdutos;
 import classes.views.usuarios.CreateUser;
@@ -85,7 +87,7 @@ public class Painel {
 		menuItems.setBorder(new EmptyBorder(8, 8, 8, 8));
 		menuItems.setBackground(new Color(0, 200, 255, 50));
 		
-		JLabel menuLabel = new JLabel("Menu Principal (somente usúarios disponível)");
+		JLabel menuLabel = new JLabel("Menu Principal                                       ");
 		menuLabel.setForeground(corEscura);
 		menuLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		menuLabel.setFont(accentFont);
@@ -120,8 +122,8 @@ public class Painel {
 		novoPedidoButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+
+				CriarPedido criarPedidos= new CriarPedido(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -132,8 +134,7 @@ public class Painel {
 		verPedidoButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				ListPedidos listPedidos = new ListPedidos(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -145,7 +146,7 @@ public class Painel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				CreateProduto criarProdutos = new CreateProduto(usuarioLogado);
+				ListProdutos listProdutos = new ListProdutos(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -243,14 +244,11 @@ public class Painel {
 		button.setBackground(corEscura);
 		button.setForeground(corTexto);
 		button.setFont(contentFont);
-		//button.setMnemonic(KeyEvent.VK_S);
 		button.setPreferredSize(new Dimension(150, 90));
 		button.setFocusable(false);
 		button.setVerticalTextPosition(SwingConstants.CENTER);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 
-		//ImageIcon logoutIcon = new ImageIcon("icon.png");
-		
 		button.addMouseListener(new MouseAdapter() {
 		
             @Override

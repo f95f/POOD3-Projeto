@@ -64,8 +64,7 @@ public class ListProdutos {
 	
 	private ProdutoService service = new ProdutoService();
 	private Categoria categoriaService = new Categoria();
-	//ArrayList<ProdutoDTO> dataSource;
-	
+
 	public ListProdutos(AuthenticatedUser Produto){
 		
 		this.nomeusuarioLogado.setText("Olá, " + Produto.getUserName() + "!");
@@ -364,7 +363,6 @@ public class ListProdutos {
 						case "categoria": {
 							mostrarEditorCategoria(id);
 					        break;
-							
 						}
 						case "dimensoes": {
 							mostrarEditorDimensoes(id);
@@ -548,7 +546,6 @@ public class ListProdutos {
         } else {
             textField.setBorder(internalPadding); 
         }
-		
 	}
 	
 	private JComboBox<Categoria> listCategorias(){
@@ -586,6 +583,5 @@ public class ListProdutos {
                 button.setBackground(corEscura);
             }
         });
-		
 	}
 }
