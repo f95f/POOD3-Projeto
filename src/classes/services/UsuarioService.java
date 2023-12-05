@@ -178,4 +178,18 @@ public class UsuarioService {
 		
 		return this.searchBy("idNivelUsuario", 1 + "");
 	}
+
+	public int trocarSenha(int userId, String senhaAtual, String senhaNova, String confirmarSenha) {
+
+		Usuario usuarioEncontrado = this.buscarPorId(userId);
+		if(!usuarioEncontrado.getSenha().equals(senhaAtual)) {
+			return 2;
+		}
+		else if(!senhaNova.equals(confirmarSenha)) {
+			return 3;
+		}
+		else {
+			return this.atualizar(senhaNova, "senha", userId);
+		}
+	}
 }

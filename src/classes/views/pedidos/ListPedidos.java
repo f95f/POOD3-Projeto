@@ -100,7 +100,7 @@ public class ListPedidos {
 		head.add(nomeusuarioLogado, BorderLayout.WEST);
 		head.add(btnLogout, BorderLayout.EAST);
 		
-		JPanel menuPedidos = new JPanel(new GridLayout(0, 2));
+		JPanel menuPedidos = new JPanel(new GridLayout(0, 3));
 		
 		JPanel controlButtonsPannel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton btnNovoPedido = new JButton("Novo");
@@ -121,14 +121,28 @@ public class ListPedidos {
 		controlButtonsPannel.add(btnEditarPedido);
 		controlButtonsPannel.add(btnExcluirPedido);
 
+		JPanel searchProdutoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JLabel lblSelecionarProduto = new JLabel("Listar por Produtos: ");
+		JComboBox<ProdutoDTO> btnSelecionarProduto = listProdutos();
+		
+		btnSelecionarProduto.setBorder(new LineBorder(corEscura, 1));
+		btnSelecionarProduto.setPreferredSize(new Dimension(140, 30));
+		lblSelecionarProduto.setForeground(corClara);
+		addSearchProdutoAction(btnSelecionarProduto);
+		
+		searchProdutoPanel.setBorder(margem);
+		searchProdutoPanel.setBackground(corMedia);
+		searchProdutoPanel.add(lblSelecionarProduto);
+		searchProdutoPanel.add(btnSelecionarProduto);
+		
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JLabel lblSelecionarUsuario = new JLabel("Listar por Usuários: ");
 		JComboBox<UserDTO> btnSelecionarUsuario = listUsers();
 
 		btnSelecionarUsuario.setBorder(new LineBorder(corEscura, 1));
-		
-        lblSelecionarUsuario.setForeground(corClara);
-		addSearchAction(btnSelecionarUsuario);
+		btnSelecionarUsuario.setPreferredSize(new Dimension(140, 30));
+		lblSelecionarUsuario.setForeground(corClara);
+		addSearchUserAction(btnSelecionarUsuario);
 		
 		searchPanel.setBorder(margem);
 		searchPanel.setBackground(corMedia);
@@ -136,6 +150,7 @@ public class ListPedidos {
 		searchPanel.add(btnSelecionarUsuario);
 		
 		menuPedidos.add(controlButtonsPannel);
+		menuPedidos.add(searchProdutoPanel);
 		menuPedidos.add(searchPanel);
 		body.add(menuPedidos, BorderLayout.NORTH);
 
@@ -173,6 +188,18 @@ public class ListPedidos {
 			usersList.addItem(item); 
 		}
 		return usersList;
+	}
+
+	private JComboBox<ProdutoDTO> listProdutos(){
+		ProdutoService produto = new ProdutoService();
+		ArrayList<ProdutoDTO> produtos = produto.listar();
+		JComboBox<ProdutoDTO> produtosList = new JComboBox<>();
+		
+		produtosList.addItem(new ProdutoDTO(0, "Todos", null, null, null, null, null, null, null, null, null, null));
+		for (ProdutoDTO item : produtos) { 
+			produtosList.addItem(item); 
+		}
+		return produtosList;
 	}
 
 	private void renderTable(ArrayList<PedidoDTO> dataSource) {
@@ -225,7 +252,7 @@ public class ListPedidos {
 		qtdColumn.setMaxWidth(40);
 	}
 
-	private void addSearchAction(JComboBox<UserDTO> btnSelecionarUsuario) {
+	private void addSearchUserAction(JComboBox<UserDTO> btnSelecionarUsuario) {
 		
 		btnSelecionarUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -236,7 +263,18 @@ public class ListPedidos {
 
         });
 	}
+	private void addSearchProdutoAction(JComboBox<ProdutoDTO> btnSelecionarProduto) {
+		
+		btnSelecionarProduto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	
+            	ProdutoDTO selectedOption = (ProdutoDTO) btnSelecionarProduto.getSelectedItem();
+                searchByProduto(selectedOption.getIdProduto());
+            }
 
+        });
+	}
+	
 	private void searchByUser(int idUsuario) {
 		ArrayList<PedidoDTO> dataSource = this.service.searchByUser(idUsuario);
 		renderTable(dataSource);
@@ -279,12 +317,14 @@ public class ListPedidos {
 	
 	private void addEditarPedidoAction(JButton button){
 		
-		String[] fields = {"id", "Cliente", "Produto", "dtPedido", "dtPagamento", "notaFiscal", "dtEnvio", "dtRecebimento", "Endereço", "entregaCEP", "entregaTelefone", "valorTotal", "qtdItens"};
+		String[] fields = {"id", "Cliente", "Produto", "dtPedido", "dtPagamento", "notaFiscal", "dtEnvio", "dtRecebimento", "Endereço", "entregaCEP", "entregaTelefone", "valorTotal", "qtdItems"};
 		
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if(!usuarioTemAcesso()) { return; }
 				
 				if(table.getSelectedRow() != -1 && table.getSelectedColumn() > 0) {
 
@@ -470,7 +510,7 @@ public class ListPedidos {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				if(!usuarioTemAcesso()) { return; }
 				if(table.getSelectedRow() != -1) {
 					
 					int confirmarExclusão = JOptionPane.showConfirmDialog(
@@ -513,6 +553,20 @@ public class ListPedidos {
 				}
 			}
 		});
+	}
+	
+	private boolean usuarioTemAcesso(){
+		
+		if(usuarioLogado.getIdNivelUsuario() > 1) {
+			return true;
+		}
+		JOptionPane.showMessageDialog(
+			null,
+			"Você não tem permissão para realizar esta ação.",
+			"Sem Autorização", 
+			JOptionPane.OK_OPTION
+		);
+		return false;
 	}
 	
 	private void addVoltarAction(JButton button) {	

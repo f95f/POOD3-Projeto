@@ -236,7 +236,8 @@ public class ListUsers {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
+				if(!usuarioTemAcesso()) { return; }
 				CreateUser createUser = new CreateUser(usuarioLogado);
 				frame.dispose();
 			}
@@ -268,7 +269,8 @@ public class ListUsers {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
+				if(!usuarioTemAcesso()) { return; }
 				if(table.getSelectedRow() != -1) {
 					
 					int confirmarExclusão = JOptionPane.showConfirmDialog(
@@ -321,7 +323,8 @@ public class ListUsers {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
+				if(!usuarioTemAcesso()) { return; }
 				if(table.getSelectedRow() != -1 && table.getSelectedColumn() > 0) {
 
 					int id = (int) table.getValueAt(table.getSelectedRow(), 0);	
@@ -504,7 +507,19 @@ public class ListUsers {
 			}
 		});
 	}
-	
+	private boolean usuarioTemAcesso(){
+		
+		if(usuarioLogado.getIdNivelUsuario() > 1) {
+			return true;
+		}
+		JOptionPane.showMessageDialog(
+			null,
+			"Você não tem permissão para realizar esta ação.",
+			"Sem Autorização", 
+			JOptionPane.OK_OPTION
+		);
+		return false;
+	}
 	private void setTextFieldStyle(JTextField textField) {
 		textField.setMargin(new Insets(5, 10, 5, 10));
 		textField.setBorder(new LineBorder(corEscura, 1));

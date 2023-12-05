@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -118,7 +119,7 @@ public class Painel {
 
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		
-		JButton novoPedidoButton = new JButton("Novo Pedido");
+		JButton novoPedidoButton = new JButton("Registrar Pedido");
 		novoPedidoButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -146,7 +147,7 @@ public class Painel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ListProdutos listProdutos = new ListProdutos(usuarioLogado);
+				CreateProduto criarProdutos = new CreateProduto(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -192,8 +193,8 @@ public class Painel {
 		newUserButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
+				if(!usuarioTemAcesso()) { return; }
+				CreateUser criarUsuarios = new CreateUser(usuarioLogado);
 				frame.dispose();
 				
 			}
@@ -204,7 +205,7 @@ public class Painel {
 		listUserButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				if(!usuarioTemAcesso()) { return; }
 				ListUsers listUserButton = new ListUsers(usuarioLogado);
 				frame.dispose();
 				
@@ -212,17 +213,17 @@ public class Painel {
 		});
 		buttonList.add(listUserButton);
 		
-		JButton institucionalButton = new JButton("Institucional");
-		institucionalButton.addActionListener(new ActionListener() {	
+		JButton trocarSenhaButton = new JButton("Trocar Senha");
+		trocarSenhaButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ListUsers institucionalButton = new ListUsers(usuarioLogado);
+				TrocarSenha trocarSenha = new TrocarSenha(usuarioLogado);
 				frame.dispose();
 				
 			}
 		});
-		buttonList.add(institucionalButton);
+		buttonList.add(trocarSenhaButton);
 		
 		for(int i = 0; i < buttonList.size(); i++) {
 			
@@ -237,6 +238,20 @@ public class Painel {
 
 			menuContainer.add(buttonPanel);
 		}
+	}
+	
+	private boolean usuarioTemAcesso(){
+		
+		if(usuarioLogado.getIdNivelUsuario() > 1) {
+			return true;
+		}
+		JOptionPane.showMessageDialog(
+			null,
+			"Você não tem permissão para realizar esta ação.",
+			"Sem Autorização", 
+			JOptionPane.OK_OPTION
+		);
+		return false;
 	}
 	
 	private void setMenuItemStyle(JButton button){

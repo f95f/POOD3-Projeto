@@ -76,6 +76,7 @@ public class Usuario {
 
 	}
 	public int editar(String valor, String campo, int id) {
+		System.out.println("\n\n > " + "update lojinha.usuarios set " + campo + " = '" + valor + "' where idUsuario = " + id + ";");
 		return this.dbQuery.execute(
 			"update lojinha.usuarios set " + campo + " = '" + valor + "' where idUsuario = " + id + ";"
 		);

@@ -182,7 +182,7 @@ public class CriarPedido {
 		pedido.setValorTotal(textFields.get(8).getText());
 		pedido.setQtdItems(Integer.parseInt(textFields.get(9).getText()));
 		
-		this.statusMessage.setText("Pedido adicionado por sucesso.");
+		this.statusMessage.setText("Pedido registrado com sucesso.");
 		service.criar(pedido);
 	}
 	

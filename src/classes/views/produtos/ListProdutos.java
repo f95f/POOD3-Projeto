@@ -299,7 +299,8 @@ public class ListProdutos {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
+				if(!usuarioTemAcesso()) { return; }
 				if(table.getSelectedRow() != -1) {
 					
 					int confirmarExclusão = JOptionPane.showConfirmDialog(
@@ -352,7 +353,8 @@ public class ListProdutos {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
+				if(!usuarioTemAcesso()) { return; }
 				if(table.getSelectedRow() != -1 && table.getSelectedColumn() > 0) {
 
 					int id = (int) table.getValueAt(table.getSelectedRow(), 0);	
@@ -559,6 +561,19 @@ public class ListProdutos {
 		return categoriasList;
 	}
 	
+	private boolean usuarioTemAcesso(){
+		
+		if(usuarioLogado.getIdNivelUsuario() > 1) {
+			return true;
+		}
+		JOptionPane.showMessageDialog(
+			null,
+			"Você não tem permissão para realizar esta ação.",
+			"Sem Autorização", 
+			JOptionPane.OK_OPTION
+		);
+		return false;
+	}
 	private void setButtonStyle(JButton button) {
 		
 		button.setBackground(corEscura);
