@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import classes.models.Usuario;
+import classes.utils.PedidoDTO;
 import classes.utils.ProdutoDTO;
 import classes.utils.UserDTO;
 
@@ -191,5 +192,11 @@ public class UsuarioService {
 		else {
 			return this.atualizar(senhaNova, "senha", userId);
 		}
+	}
+
+	public boolean findPedidos(int id) {
+		PedidoService pedido = new PedidoService();
+		ArrayList<PedidoDTO> list = pedido.buscarPor("idUsuario", id + "");
+		return (list.size() != 0);
 	}
 }

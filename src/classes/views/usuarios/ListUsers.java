@@ -281,14 +281,23 @@ public class ListUsers {
 					);
 					
 					if(confirmarExclusão == 0) { 
-						int id = (int) table.getValueAt(table.getSelectedRow(), 0);					
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);	
+						if(existeDadosAssociados(id)){
+							JOptionPane.showMessageDialog(
+								null,
+								"Existem pedidos associados à este usuário.",
+								"Impossível Excluir", 
+								JOptionPane.OK_OPTION
+							);
+							return;
+						}
 						int status = service.excluir(id);
 						
 						if(status == 1) {
 							renderTable(getUsersList());
 							JOptionPane.showMessageDialog(
 								null,
-								"Produto Excluído.",
+								"Usuário Excluído.",
 								"Confirmar Exclusão", 
 								JOptionPane.INFORMATION_MESSAGE 
 							);
@@ -315,6 +324,10 @@ public class ListUsers {
 		});
 	}
 	
+	protected boolean existeDadosAssociados(int id) {
+		return this.service.findPedidos(id);
+	}
+
 	private void addEditarUserAction(JButton button){
 		
 		String[] fields = {"idUsuario", "nome", "email", "nivel", "telefone", "endereço", "cep", "status"};

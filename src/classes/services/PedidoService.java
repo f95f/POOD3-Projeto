@@ -8,6 +8,7 @@ import java.util.Scanner;
 import classes.models.Pedido;
 import classes.models.Usuario;
 import classes.utils.PedidoDTO;
+import classes.utils.ProdutoDTO;
 
 public class PedidoService {
 
@@ -149,7 +150,11 @@ public class PedidoService {
 
 	private String getProduto(int idProduto) {
 		ProdutoService produto = new ProdutoService();
-		return produto.buscarPorId(idProduto).getNome();
+		ProdutoDTO item = produto.buscarPorId(idProduto);
+		if(item == null) {
+			return "Não definido";
+		}
+		return item.getNome();
 	}
 	public ArrayList<PedidoDTO> searchByUser(int idUsuario) {
 		if(idUsuario == 0) {

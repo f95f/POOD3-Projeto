@@ -166,16 +166,8 @@ public class Painel {
 		});
 		buttonList.add(listProdutoButton);
 		
-		JButton verEstoqueButton = new JButton("Verificar Estoque");
-		verEstoqueButton.addActionListener(new ActionListener() {	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				ListUsers listarUsuarios = new ListUsers(usuarioLogado);
-				frame.dispose();
-				
-			}
-		});
+		JButton verEstoqueButton = new JButton("");
+		
 		buttonList.add(verEstoqueButton);
 		
 		JButton categoriasButton = new JButton("Categorias");

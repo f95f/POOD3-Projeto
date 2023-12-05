@@ -8,6 +8,7 @@ import java.util.Scanner;
 import classes.models.Categoria;
 import classes.models.Produto;
 import classes.models.Usuario;
+import classes.utils.PedidoDTO;
 import classes.utils.ProdutoDTO;
 import classes.utils.UserDTO;
 
@@ -198,5 +199,9 @@ public class ProdutoService {
 		}
 		return null;
 	}
- 
+	public boolean findPedidos(int id) {
+		PedidoService pedido = new PedidoService();
+		ArrayList<PedidoDTO> list = pedido.buscarPor("idProduto", id + "");
+		return (list.size() != 0);
+	}
 }

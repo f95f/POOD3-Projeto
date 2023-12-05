@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classes.database.DBQuery;
+import classes.services.ProdutoService;
+import classes.utils.ProdutoDTO;
 
 public class Categoria {
 
@@ -42,6 +44,13 @@ public class Categoria {
 			e.printStackTrace();
 		}
 		return categoriasList;	
+	}
+	
+	public boolean findProducts(int id) {	
+		ProdutoService service = new ProdutoService();
+		ArrayList<ProdutoDTO> list = service.searchByCategoria(id);
+		return (list.size() != 0);
+		
 	}
 	
 	public int save() {
@@ -131,7 +140,7 @@ public class Categoria {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
 }
 
 

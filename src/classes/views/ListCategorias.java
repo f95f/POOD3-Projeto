@@ -289,7 +289,16 @@ public class ListCategorias {
 					);
 					
 					if(confirmarExclusão == 0) { 
-						int id = (int) table.getValueAt(table.getSelectedRow(), 0);					
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);	
+						if(existeDadosAssociados(id)){
+							JOptionPane.showMessageDialog(
+								null,
+								"Existem produtos associados à esta categoria.",
+								"Impossível Excluir", 
+								JOptionPane.OK_OPTION
+							);
+							return;
+						}
 						int status = service.delete(id);
 						
 						if(status == 1) {
@@ -320,7 +329,12 @@ public class ListCategorias {
 					);
 				}
 			}
+
 		});
+	}
+	private boolean existeDadosAssociados(int id) {
+		return this.service.findProducts(id);
+		
 	}
 
 	private void addSearchAction(JTextField textField) {

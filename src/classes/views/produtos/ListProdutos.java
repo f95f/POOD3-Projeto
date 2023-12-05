@@ -311,7 +311,16 @@ public class ListProdutos {
 					);
 					
 					if(confirmarExclusão == 0) { 
-						int id = (int) table.getValueAt(table.getSelectedRow(), 0);					
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);	
+						if(existeDadosAssociados(id)){
+							JOptionPane.showMessageDialog(
+								null,
+								"Existem pedidos associados à este produto.",
+								"Impossível Excluir", 
+								JOptionPane.OK_OPTION
+							);
+							return;
+						}
 						int status = service.excluir(id);
 						
 						if(status == 1) {
@@ -344,7 +353,9 @@ public class ListProdutos {
 			}
 		});
 	}
-	
+	protected boolean existeDadosAssociados(int id) {
+		return this.service.findPedidos(id);
+	}
 	private void addEditarProdutoAction(JButton button){
 		
 		String[] fields = {"idProduto", "nome", "fabricante", "marca", "modelo", "categoria", "descricao", "unidadeMedida", "dimensoes", "peso", "cor"};
